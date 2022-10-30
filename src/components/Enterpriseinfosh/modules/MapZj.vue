@@ -106,11 +106,11 @@
         position: relative;
     }
 
-    input {
+    /* input {
         position: absolute;
         top: 30px;
         z-index: 9999;
-    }
+    } */
 
     #btn-2d {
         left: 20px;
