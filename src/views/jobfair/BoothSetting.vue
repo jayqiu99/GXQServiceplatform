@@ -123,6 +123,8 @@
           <a @click="invitationitem(record)">邀请企业</a>
           <a-divider type="vertical" /> -->
           <a @click="editDictItem(record)">展位设置</a>
+             <a-divider type="vertical" />
+          <a @click="boothSetting(record)">展位页面</a>
           <!-- <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">
@@ -154,7 +156,22 @@
       </a-table>
     </div>
     <!-- table区域-end -->
-
+      <a-drawer
+    title="展位编辑"
+    :maskClosable="true"
+    :width="drawerWidth"
+    placement="right"
+    :closable="true"
+    @close="handleCancel"
+    :visible="visible"
+    style="height: 100%; overflow: auto; padding-bottom: 53px"
+  >
+    <booth-page :key="boothkey" :recordData='recordData'/>
+       <div class="drawer-bootom-button">
+      <a-button type="primary" style="margin-right: 0%" @click="handleCancel">关闭</a-button>
+      <!-- <a-button @click="handleSubmit" type="primary" :loading="confirmLoading">保存</a-button> -->
+    </div>
+      </a-drawer>
     <add-modal ref="modalForm" @ok="modalFormOk"></add-modal>
     <user-recycle-bin-modal ref="modalFormlist" @ok="modalFormOk" />
     <invitation-job ref="invitationlist" @ok="modalFormOk" />
@@ -170,7 +187,7 @@ import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 import JInput from '@/components/jeecg/JInput'
 import UserRecycleBinModal from './modules/BoothInfoModal'
 import InvitationJob from './modules/InvitationJob'
-
+import BoothPage from './modules/BoothPage'
 export default {
   name: 'UserList',
   mixins: [JeecgListMixin],
@@ -179,9 +196,14 @@ export default {
     JInput,
     UserRecycleBinModal,
     InvitationJob,
+    BoothPage
   },
   data() {
     return {
+      recordData:null,
+      boothkey:false,
+      drawerWidth:'70%',
+        visible:false,
       description: '',
       queryParam: {
         name: '',
@@ -278,6 +300,14 @@ export default {
     },
   },
   methods: {
+    boothSetting(record){
+      this.recordData=record
+      this.boothkey=!this.boothkey
+      this.visible=true
+    },
+     handleCancel(){
+        this.visible=false
+    },
     inEnterprise(record) {
       this.$refs.modalForminvitation.edit(record)
     },
@@ -503,6 +533,19 @@ export default {
   },
 }
 </script>
+<style scoped>
+.drawer-bootom-button {
+  position: absolute;
+  bottom: -8px;
+  width: 100%;
+  border-top: 1px solid #e8e8e8;
+  padding: 10px 16px;
+  text-align: right;
+  left: 0;
+  background: #fff;
+  border-radius: 0 0 2px 2px;
+}
+</style>
 <!-- <style scoped>
 @import '~@assets/less/common.less';
 </style> -->
