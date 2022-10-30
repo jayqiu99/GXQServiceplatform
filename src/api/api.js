@@ -115,11 +115,12 @@ const jobenterpriseList = (params)=>getAction("/hall/entryenterprise/list",param
 const jobfairList = (params)=>getAction("/hall/jobfair/list?isexisting=0",params);// 《招聘会查询》
 const jobenablecount = (params)=>getAction("/hall/jobfair/list?enable=1",params);// 《招聘会查询》
 const jobenable = (params)=>getAction("/hall/jobfair/enable",params);//启用-招聘会
+const setuphall = (params)=>getAction("/hall/jobfair/setuphall",params);//设置招聘大厅()
 //展位
 const getBoothList = (params)=>getAction("/hall/booth/list",params);// 《展位查询》
 const togetBoothList = (params)=>getAction("/hall/booth/list?pageSize=100",params);// 《展位查询》
 const getEditById=(params)=>postAction("/hall/booth/editById",params);
-const getboothobj=(params)=>postAction("/hall/booth/getboothbyenterpriseid",params);
+const getboothobj=(params)=>getAction("/hall/booth/getboothbyenterpriseid",params);
 const openadd=(params)=>postAction("/hall/booth/add",params);
 const chooseboothadd=(params)=>postAction("/hall/booth/choosebooth",params);//企业选择展位
 const closeact = (params)=>getAction("/hall/booth/close",params);// 《不公开》
@@ -284,6 +285,7 @@ export {
   jobenterpriseList,
   jobenablecount,
   jobenable,
+  setuphall,
   getBoothList,
   togetBoothList,
   getEditById,
