@@ -609,7 +609,7 @@
   }
 </script>
 <style scope>
-  html,
+  /* html,
   body,
   div,
   p {
@@ -633,7 +633,7 @@
   td {
     font-size: 14px;
     padding: 0;
-  }
+  } */
 
   a {
     text-decoration: none;
