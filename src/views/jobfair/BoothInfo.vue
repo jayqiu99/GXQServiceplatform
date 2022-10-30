@@ -8,7 +8,7 @@
             <!-- <a-form-item label="招聘会名称">
               <a-input placeholder="请输入招聘会名称" v-model="queryParam.name"></a-input>
             </a-form-item> -->
-             <a-form-item
+            <a-form-item
               label="招聘会名称"
               :labelCol="{ span: 6 }"
               style="margin-left: -14px"
@@ -122,13 +122,14 @@
         <template slot="enable" slot-scope="text, record">
           <div class="anty-img-wrap">
             <span>
-              <a-tag v-if="record.enable == '未启用'" color="red">未启用</a-tag>
+              <a-tag v-if="record.enable == '未启用'" color="red">未启用</a-tag
+              ><a-tag color="green" v-if="record.recruitmentHall == 1">招聘大厅</a-tag>
               <a-tag v-if="record.enable == '已启用'" color="blue">已启用</a-tag>
             </span>
           </div>
         </template>
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑修改</a>
+          <a @click="handleEdit(record)">修改</a>
           <!-- <a @click="handleEdit(record)" >编辑</a> -->
 
           <!-- <a-divider type="vertical" />
@@ -142,6 +143,12 @@
             @confirm="() => handleDelete(record.id)"
           >
             <a>删除</a>
+          </a-popconfirm>
+          <a-divider type="vertical" />
+          <a @click="handleBoothset(record)">展位设置</a>
+          <a-divider type="vertical" />
+          <a-popconfirm title="是否设置招聘大厅?" @confirm="() => handleRecruitmentHall(record.id)">
+            <a>设置招聘大厅</a>
           </a-popconfirm>
           <a-divider type="vertical" v-if="record.enable == '未启用'" />
           <a-popconfirm title="确定要启用吗?" v-if="record.enable == '未启用'" @confirm="() => handleEnable(record)">
@@ -187,7 +194,7 @@
     <!-- table区域-end -->
 
     <add-modal ref="modalForm" @ok="modalFormOk"></add-modal>
-    <user-recycle-bin-modal ref="modalFormlist" @ok="modalFormOk" />
+    <user-recycle-bin-modal  ref="modalFormlist" @ok="modalFormOk" />
     <invitation-job ref="invitationlist" @ok="modalFormOk" />
   </a-card>
 </template>
@@ -196,7 +203,7 @@
 import AddModal from './modules/AddBooth'
 import { filterObj } from '@/utils/util'
 import { putAction, getFileAccessHttpUrl } from '@/api/manage'
-import { frozenBatch, jobfairList, jobenablecount, jobenable } from '@/api/api'
+import { frozenBatch, jobfairList, jobenablecount, jobenable, setuphall } from '@/api/api'
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 import JInput from '@/components/jeecg/JInput'
 import UserRecycleBinModal from './modules/BoothInfoModal'
@@ -431,14 +438,14 @@ export default {
         that.enableParam.id = recdata.id
         that.enableParam.enable = 1
         jobenable(that.enableParam).then((res) => {
-              if (res.success) {
-                that.$message.success(res.message)
-                this.loadData()
-              } else {
-                that.$message.warning(res.message)
-                this.loadData()
-              }
-            })
+          if (res.success) {
+            that.$message.success(res.message)
+            this.loadData()
+          } else {
+            that.$message.warning(res.message)
+            this.loadData()
+          }
+        })
         let params = this.getQueryParams() //查询条件
 
         // jobenablecount().then((res) => {
@@ -459,6 +466,22 @@ export default {
         //   }
         // })
       }
+    },
+    //设置招聘大厅
+    handleRecruitmentHall(id) {
+      setuphall({ jobFairId: id }).then((res) => {
+        if (res.success) {
+          this.$message.success(res.message)
+          this.loadData()
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    //展位设置
+    handleBoothset(record) {
+      this.$refs.modalFormlist.reset()
+      this.$refs.modalFormlist.edit(record)
     },
     handleDisable(DisableId) {
       const that = this
