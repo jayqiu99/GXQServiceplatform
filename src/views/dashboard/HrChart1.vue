@@ -193,13 +193,13 @@
         </a-col>
       </a-row>
     </a-card>
-    <!-- 报名并添加参会人员 -->
+    <!-- 报名并添加招聘人员 -->
     <a-modal :title="chtitle" :width="600" :visible="bmandtbryvisible" @cancel="bmtjryhandleCancel">
       <a-spin :spinning="confirmLoading">
         <!-- 1 -->
         <el-card class="box-card" style="height: 300px;">
           <div slot="header" class="clearfix">
-            <span>参会人员1</span>
+            <span>招聘人员1</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <div class="text item">
@@ -213,13 +213,17 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[0].phone"></el-input>
               </el-form-item>
+              <el-form-item label="是否愿意出境" prop="oncamera">
+                <el-radio v-model="formLabelAlign[0].oncamera" :label="0">否</el-radio>
+                <el-radio v-model="formLabelAlign[0].oncamera" :label="1">是</el-radio>
+              </el-form-item>
             </el-form>
           </div>
         </el-card>
         <!-- 2 -->
         <el-card class="box-card" style="height: 300px;">
           <div slot="header" class="clearfix">
-            <span>参会人员2</span>
+            <span>招聘人员2</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <div class="text item">
@@ -232,6 +236,10 @@
               </el-form-item>
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[1].phone"></el-input>
+              </el-form-item>
+              <el-form-item label="是否愿意出境" prop="oncamera">
+                <el-radio v-model="formLabelAlign[1].oncamera" :label="0">否</el-radio>
+                <el-radio v-model="formLabelAlign[1].oncamera" :label="1">是</el-radio>
               </el-form-item>
             </el-form>
           </div>
@@ -287,19 +295,21 @@
           updateTime: '',
         },
         jobfairinfo: '',
-        chtitle: '添加参会人员',
+        chtitle: '添加招聘人员',
         confirmLoading: false,
         labelPosition: 'right',
         formLabelAlign: [{
           name: '',
           post: '',
-          phone: ''
+          phone: '',
+          oncamera:0
         }, {
           name: '',
           post: '',
-          phone: ''
+          phone: '',
+          oncamera:0
         }],
-        bmandtbryvisible: false,//参会人员
+        bmandtbryvisible: false,//招聘人员
         bMdatesource: [],
         // v-charts配置参数 
         foralrte: [
@@ -427,7 +437,7 @@
       //     return value
       //   },
 
-      //添加参会人员
+      //添加招聘人员
       bmandbcchry() {
         this.bmandtbryvisible = true;
         var departn = localStorage.getItem('departId')
@@ -455,13 +465,13 @@
             if (this.formLabelAlign[0].phone != '') {
               if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[0].phone)) {
                 // callback(new Error("请输入正确的手机号"));
-                this.$message.warning('参会人员1联系电话不正确！')
+                this.$message.warning('招聘人员1联系电话不正确！')
                 return;
               }
             }
             if (this.formLabelAlign[1].phone != '') {
               if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[1].phone)) {
-                this.$message.warning('参会人员2联系电话不正确！')
+                this.$message.warning('招聘人员2联系电话不正确！')
                 return;
               }
             }
@@ -491,8 +501,8 @@
                 if (restt.success) {
                   this.$message.success(restt.message)
 
-                  console.log("报名添加参会人员11234567890-", this.formLabelAlign);
-                  console.log("报名添加参会人员2", this.addchpo);
+                  console.log("报名添加招聘人员11234567890-", this.formLabelAlign);
+                  console.log("报名添加招聘人员2", this.addchpo);
                   this.axios({
                     method: 'post',
                     url: '/app/staff/add',
@@ -680,8 +690,8 @@
         //       params: { enterpriseInfoId: response.result.enterpriseIds, jobfairid: record.id },
         //     })
         //       .then((response) => {
-        //         console.log('参会人员信息', response.result.records.length)
-        //         console.log('参会人员信息', response.result.records)
+        //         console.log('招聘人员信息', response.result.records.length)
+        //         console.log('招聘人员信息', response.result.records)
         //         if (response.result.records.length < 1) {
         //           this.formLabelAlign[0].jobFairId = this.jobfairinfo.id
         //           this.formLabelAlign[0].enterpriseInfoId = response.result.enterpriseIds
@@ -699,7 +709,7 @@
         //           this.formLabelAlign[1].phone = ''
         //           this.formLabelAlign[1].createTime = this.getNowFormatDate()
         //           this.bmandtbryvisible = true;
-        //           // this.$message.warning('该企业没有参会人员！')
+        //           // this.$message.warning('该企业没有招聘人员！')
         //           // return
         //         } else if (response.result.records.length == 1) {
         //           this.formLabelAlign[0].jobFairId = response.result.records[0].jobFairId

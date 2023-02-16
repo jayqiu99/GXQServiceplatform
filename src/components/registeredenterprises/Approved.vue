@@ -64,7 +64,7 @@
         @change="handleTableChange"
       >
         <span slot="action" slot-scope="text, record">
-          <a @click="chyrList(record)"><a-icon type="search" />参会人员</a>
+          <a @click="chyrList(record)"><a-icon type="search" />招聘人员</a>
           <a-divider type="vertical" />
           <a @click="detail(record)"><a-icon type="setting" />审核</a>
         </span>
@@ -93,7 +93,7 @@
     <add-modal ref="modalForm" @ok="modalFormOk"></add-modal>
     <enterprise-info ref="enterpriseinfo"></enterprise-info>
     <invitation-job ref="stafflist" @ok="modalFormOk" />
-    <!-- 查看参会人员 -->
+    <!-- 查看招聘人员 -->
     <see-modal ref="chyrmodalForm" @ok="modalFormOk"></see-modal>
   </a-card>
 </template>

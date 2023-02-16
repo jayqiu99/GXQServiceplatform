@@ -63,7 +63,7 @@
         @change="handleTableChange"
       >
         <span slot="action" slot-scope="text, record">
-          <a @click="chyrList(record)"><a-icon type="search" />参会人员</a>
+          <a @click="chyrList(record)"><a-icon type="search" />招聘人员</a>
           <a-divider type="vertical" />
           <a @click="detail(record)"><a-icon type="setting" />审核</a>
         </span>
@@ -92,7 +92,7 @@
     <add-modal ref="modalForm" @ok="modalFormOk"></add-modal>
     <enterprise-info ref="enterpriseinfo"></enterprise-info>
     <invitation-job ref="stafflist" @ok="modalFormOk" />
-    <!-- 查看参会人员 -->
+    <!-- 查看招聘人员 -->
     <see-modal ref="chyrmodalForm" @ok="modalFormOk"></see-modal>
   </a-card>
 </template>
@@ -150,7 +150,7 @@ export default {
           title: '负责人',
           align: 'center',
           dataIndex: 'companyPrincipal',
-          width: 150,
+          width: 80,
         },
         {
           title: '联系电话',
@@ -165,6 +165,12 @@ export default {
           width: 150,
         },
         {
+          title: '申请时间',
+          align: 'center',
+          dataIndex: 'auditTime',
+          width:150
+        },
+        {
           title: '展位号',
           align: 'center',
           dataIndex: 'boothNumber',
@@ -176,6 +182,7 @@ export default {
           dataIndex: 'examinestate2',
           scopedSlots: { customRender: 'examinestatetext' },
         },
+        
         {
           title: '操作',
           dataIndex: 'action',

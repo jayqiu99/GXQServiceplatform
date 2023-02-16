@@ -8,8 +8,12 @@
             <!-- <a-form-item label="招聘会名称">
               <a-input placeholder="请输入招聘会名称" v-model="queryParam.name"></a-input>
             </a-form-item> -->
-            <a-form-item label="招聘会名称" :labelCol="{ span: 6 }" style="margin-left: -14px"
-              :wrapperCol="{ span: 14, offset: 1 }">
+            <a-form-item
+              label="招聘会名称"
+              :labelCol="{ span: 6 }"
+              style="margin-left: -14px"
+              :wrapperCol="{ span: 14, offset: 1 }"
+            >
               <a-select v-model="queryParam.jobfairid" style="margin-left: -18px; width: 94%">
                 <a-select-option value>请选择</a-select-option>
                 <a-select-option v-for="d in jobfairdata" :key="d.id" :value="d.id">{{ d.name }}</a-select-option>
@@ -105,13 +109,24 @@
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
         <i class="anticon anticon-info-circle ant-alert-icon"></i>已选择&nbsp;
-        <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项&nbsp;&nbsp;
+        <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项&nbsp;&nbsp;
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
-      <a-table ref="table" bordered size="middle" rowKey="id" :columns="columns" :dataSource="dataSource"
-        :scroll="{ x: 1500, y: 700 }" :pagination="ipagination" :loading="loading"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" @change="handleTableChange">
+      <a-table
+        ref="table"
+        bordered
+        size="middle"
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :scroll="{ x: 1500, y: 700 }"
+        :pagination="ipagination"
+        :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        @change="handleTableChange"
+      >
         <template slot="enable" slot-scope="text, record">
           <div class="anty-img-wrap">
             <span>
@@ -139,8 +154,11 @@
             </a>
           </a-popconfirm> 
           <a-divider v-if="record.entrytimeOverdue != '已过期'" type="vertical" /> -->
-          <a-popconfirm v-if="record.entrytimeOverdue != '已过期'" title="确定报名该招聘会吗?"
-            @confirm="() => Selectlocation(record)">
+          <a-popconfirm
+            v-if="record.entrytimeOverdue != '已过期'"
+            title="确定报名该招聘会吗?"
+            @confirm="() => Selectlocation(record)"
+          >
             <a>
               <a>报名</a>
             </a>
@@ -151,7 +169,7 @@
           <a-divider type="vertical" />
           <a @click="handleEdit(record)">招聘会详情</a>
           <a-divider type="vertical" />
-          <a @click="EditParticipants(record)">编辑参会人员</a>
+          <a @click="EditParticipants(record)">编辑招聘人员</a>
           <a-divider type="vertical" />
           <a v-if="record.entrytimeOverdue != '已过期'" @click="bjSelectlocation(record)">选择展位</a>
           <!-- <a-divider type="vertical" />
@@ -167,17 +185,17 @@
     <!-- table区域-end -->
     <add-modal ref="modalForm" @ok="modalFormOk"></add-modal>
     <topost-modal ref="postmodalForm" @ok="modalFormOk"></topost-modal>
-    <!-- 添加参会人员 -->
-    <a-modal :title="title" :width="600" :visible="tbryvisible" @cancel="tjryhandleCancel">
+    <!-- 添加招聘人员 -->
+    <a-modal :title="title" :width="800" :visible="tbryvisible" @cancel="tjryhandleCancel">
       <a-spin :spinning="confirmLoading">
         <!-- 1 -->
-        <el-card class="box-card" style="height: 300px">
+        <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>参会人员1</span>
+            <span>招聘人员1</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <div class="text item">
-            <el-form :label-position="labelPosition" label-width="80px">
+            <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[0].name"></el-input>
               </el-form-item>
@@ -187,17 +205,31 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[0].phone"></el-input>
               </el-form-item>
+              <el-form-item label="是否愿意出境" prop="oncamera">
+                <el-radio v-model="formLabelAlign[0].oncamera" :label="0">否</el-radio>
+                <el-radio v-model="formLabelAlign[0].oncamera" :label="1">是</el-radio>
+              </el-form-item>
+              <el-form-item  required v-if="formLabelAlign[0].oncamera == 1">
+                <span slot="label">
+                  <span style="font-weight:700;color:red">出境注意事项</span>
+                </span>
+                <span style="color: black; font-weight: 700"
+                  ><p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                 <p> （2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
+                >
+              </el-form-item>
             </el-form>
           </div>
         </el-card>
         <!-- 2 -->
-        <el-card class="box-card" style="height: 300px">
+        <el-card class="box-card" >
           <div slot="header" class="clearfix">
-            <span>参会人员2</span>
+            <span>招聘人员2</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <div class="text item">
-            <el-form :label-position="labelPosition" label-width="80px">
+            <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[1].name"></el-input>
               </el-form-item>
@@ -206,6 +238,20 @@
               </el-form-item>
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[1].phone"></el-input>
+              </el-form-item>
+              <el-form-item label="是否愿意出境" prop="oncamera">
+                <el-radio v-model="formLabelAlign[1].oncamera" :label="0">否</el-radio>
+                <el-radio v-model="formLabelAlign[1].oncamera" :label="1">是</el-radio>
+              </el-form-item>
+              <el-form-item  required v-if="formLabelAlign[1].oncamera == 1">
+                <span slot="label">
+                  <span style="font-weight:700;color:red">出境注意事项</span>
+                </span>
+                <span style="color: black; font-weight: 700">
+                  <p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                  <p>（2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
+                >
               </el-form-item>
             </el-form>
           </div>
@@ -214,20 +260,20 @@
 
       <template slot="footer">
         <a-button @click="tjryhandleCancel">关闭</a-button>
-        <a-button type="primary" @click="bcchry">保存参会人员</a-button>
+        <a-button type="primary" @click="bcchry">保存招聘人员</a-button>
       </template>
     </a-modal>
-    <!-- 报名并添加参会人员 -->
+    <!-- 报名并添加招聘人员 -->
     <a-drawer :title="title" :width="600" @close="bmtjryclose" :visible="bmandtbryvisible" @cancel="bmtjryhandleCancel">
       <a-spin :spinning="confirmLoading">
         <!-- 1 -->
-        <el-card class="box-card" style="height: 300px">
+        <el-card class="box-card" >
           <div slot="header" class="clearfix">
-            <span>参会人员1</span>
+            <span>招聘人员1</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <div class="text item">
-            <el-form :label-position="labelPosition" label-width="80px">
+            <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[0].name"></el-input>
               </el-form-item>
@@ -237,17 +283,31 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[0].phone"></el-input>
               </el-form-item>
+              <el-form-item label="是否愿意出境" prop="oncamera">
+                <el-radio v-model="formLabelAlign[0].oncamera" :label="0">否</el-radio>
+                <el-radio v-model="formLabelAlign[0].oncamera" :label="1">是</el-radio>
+              </el-form-item>
+             <el-form-item  required v-if="formLabelAlign[0].oncamera == 1">
+                <span slot="label">
+                  <span style="font-weight:700;color:red">出境注意事项</span>
+                </span>
+                <span style="color: black; font-weight: 700">
+                  <p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                  <p>（2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
+                >
+              </el-form-item>
             </el-form>
           </div>
         </el-card>
         <!-- 2 -->
-        <el-card class="box-card" style="height: 300px">
+        <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>参会人员2</span>
+            <span>招聘人员2</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <div class="text item">
-            <el-form :label-position="labelPosition" label-width="80px">
+            <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[1].name"></el-input>
               </el-form-item>
@@ -256,6 +316,20 @@
               </el-form-item>
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[1].phone"></el-input>
+              </el-form-item>
+              <el-form-item label="是否愿意出境" prop="oncamera">
+                <el-radio v-model="formLabelAlign[1].oncamera" :label="0">否</el-radio>
+                <el-radio v-model="formLabelAlign[1].oncamera" :label="1">是</el-radio>
+              </el-form-item>
+              <el-form-item  required v-if="formLabelAlign[1].oncamera == 1">
+                <span slot="label">
+                  <span style="font-weight:700;color:red">出境注意事项</span>
+                </span>
+                <span style="color: black; font-weight: 700">
+                  <p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                  <p>（2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
+                >
               </el-form-item>
             </el-form>
           </div>
@@ -267,8 +341,16 @@
       </div>
     </a-drawer>
     <!-- 报名展位 -->
-    <a-drawer title="展位选择" :maskClosable="true" :width="drawerWidth" placement="right" :closable="true"
-      @close="xzhandleCancel" :visible="zwvisible" style="height: 100%; overflow: auto; padding-bottom: 53px">
+    <a-drawer
+      title="展位选择"
+      :maskClosable="true"
+      :width="drawerWidth"
+      placement="right"
+      :closable="true"
+      @close="xzhandleCancel"
+      :visible="zwvisible"
+      style="height: 100%; overflow: auto; padding-bottom: 53px"
+    >
       <booth-page :key="boothkey" :recordData="recordData" />
       <div class="drawer-bootom-button">
         <a-button style="margin-left: 85%; margin-top: 1%" @click="xzhandleCancel">关闭</a-button>
@@ -277,8 +359,16 @@
       </div>
     </a-drawer>
     <!-- 编辑展位 -->
-    <a-drawer title="展位选择" :maskClosable="true" :width="drawerWidth" placement="right" :closable="true"
-      @close="bjxzhandleCancel" :visible="bjzwvisible" style="height: 100%; overflow: auto; padding-bottom: 53px">
+    <a-drawer
+      title="展位选择"
+      :maskClosable="true"
+      :width="drawerWidth"
+      placement="right"
+      :closable="true"
+      @close="bjxzhandleCancel"
+      :visible="bjzwvisible"
+      style="height: 100%; overflow: auto; padding-bottom: 53px"
+    >
       <booth-page :key="boothkey" :recordData="recordData" />
       <div class="drawer-bootom-button">
         <!-- <a-popconfirm  title="确定提交审核吗?"
@@ -295,7 +385,6 @@
           </a>
         </a-popconfirm>
         <a-button v-else @click="Submitforreview()" type="primary" :loading="confirmLoading">下一步</a-button>
-
       </div>
     </a-drawer>
     <Bmbooth-modal ref="modalFormlist" @ok="modalFormOk" />
@@ -342,14 +431,16 @@ export default {
           name: '',
           post: '',
           phone: '',
+          oncamera: 0,
         },
         {
           name: '',
           post: '',
           phone: '',
+          oncamera: 0,
         },
       ],
-      title: '添加参会人员',
+      title: '添加招聘人员',
       confirmLoading: false,
       tbryvisible: false,
       isfalse: false,
@@ -481,6 +572,7 @@ export default {
     this.getJobfairList()
   },
   methods: {
+    handleSubmit() {},
     Submitforreview() {
       console.log(this.JumpObj, this.jobfairinfo)
       if (this.jobfairinfo.buttonType == 1) {
@@ -523,7 +615,7 @@ export default {
       this.toSignup(this.JumpObj)
     },
     EditParticipants(record) {
-      console.log('参会人员', record)
+      console.log('招聘人员', record)
       this.jobfairinfo = record
       var departn = localStorage.getItem('departId')
       this.axios({
@@ -541,7 +633,7 @@ export default {
             headers: {},
             params: { enterpriseInfoId: response.result.enterpriseIds, jobfairid: record.id },
           }).then((response) => {
-            console.log('参会人员信息', response.result.records.length)
+            console.log('招聘人员信息', response.result.records.length)
             if (response.result.records.length < 1) {
               this.formLabelAlign[0].jobFairId = this.jobfairinfo.id
               this.formLabelAlign[0].enterpriseInfoId = response.result.enterpriseIds
@@ -549,6 +641,7 @@ export default {
               this.formLabelAlign[0].name = ''
               this.formLabelAlign[0].post = ''
               this.formLabelAlign[0].phone = ''
+              this.formLabelAlign[0].oncamera = 0
               this.formLabelAlign[0].createTime = this.getNowFormatDate()
 
               this.formLabelAlign[1].jobFairId = this.jobfairinfo.id
@@ -557,9 +650,10 @@ export default {
               this.formLabelAlign[1].name = ''
               this.formLabelAlign[1].post = ''
               this.formLabelAlign[1].phone = ''
+              this.formLabelAlign[1].oncamera = 0
               this.formLabelAlign[1].createTime = this.getNowFormatDate()
               this.tbryvisible = true
-              // this.$message.warning('该企业没有参会人员！')
+              // this.$message.warning('该企业没有招聘人员！')
               // return
             } else if (response.result.records.length == 1) {
               this.formLabelAlign[0].jobFairId = response.result.records[0].jobFairId
@@ -568,6 +662,7 @@ export default {
               this.formLabelAlign[0].name = response.result.records[0].name
               this.formLabelAlign[0].post = response.result.records[0].post
               this.formLabelAlign[0].phone = response.result.records[0].phone
+              this.formLabelAlign[0].oncamera = response.result.record[0].oncamera
               this.formLabelAlign[0].createTime = response.result.records[0].createTime
               this.tbryvisible = true
             } else {
@@ -611,13 +706,13 @@ export default {
           if (this.formLabelAlign[0].phone != '') {
             if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[0].phone)) {
               // callback(new Error("请输入正确的手机号"));
-              this.$message.warning('参会人员1联系电话不正确！')
+              this.$message.warning('招聘人员1联系电话不正确！')
               return
             }
           }
           if (this.formLabelAlign[1].phone != '') {
             if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[1].phone)) {
-              this.$message.warning('参会人员2联系电话不正确！')
+              this.$message.warning('招聘人员2联系电话不正确！')
               return
             }
           }
@@ -638,8 +733,8 @@ export default {
           //   .then((restt) => {
           //     if (restt.success) {
           // this.$message.success(restt.message)
-          console.log('报名添加参会人员1', this.formLabelAlign)
-          console.log('报名添加参会人员2', this.addchpo)
+          console.log('报名添加招聘人员1', this.formLabelAlign)
+          console.log('报名添加招聘人员2', this.addchpo)
           this.axios({
             method: 'post',
             url: '/app/staff/add',
@@ -686,7 +781,7 @@ export default {
         })
     },
     bcchry() {
-      console.log('参会人员', this.formLabelAlign)
+      console.log('招聘人员', this.formLabelAlign)
 
       var departn = localStorage.getItem('departId')
       console.log('userID', store.getters.userInfo)
@@ -711,13 +806,13 @@ export default {
           if (this.formLabelAlign[0].phone != '') {
             if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[0].phone)) {
               // callback(new Error("请输入正确的手机号"));
-              this.$message.warning('参会人员1联系电话不正确！')
+              this.$message.warning('招聘人员1联系电话不正确！')
               return
             }
           }
           if (this.formLabelAlign[1].phone != '') {
             if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[1].phone)) {
-              this.$message.warning('参会人员2联系电话不正确！')
+              this.$message.warning('招聘人员2联系电话不正确！')
               return
             }
           }
@@ -786,7 +881,7 @@ export default {
       console.log('展位对象', record)
       var that = this
       this.JumpObj = record
-      console.log("123", this.jobfairinfo)
+      console.log('123', this.jobfairinfo)
       this.jobfairinfo = record
       this.recordData = record
       this.boothkey = !this.boothkey
@@ -797,7 +892,6 @@ export default {
     },
     //
     Selectlocation(record) {
-
       console.log('报名对象111', record)
       // record.isselectionbooth = 1;
       var departn = localStorage.getItem('departId')
@@ -811,18 +905,17 @@ export default {
         .then((response) => {
           this.axios({
             method: 'get',
-            url: '/hall/entryenterprise/list',
+            url: '/hall/entryenterprise/entryjudge',
             headers: {},
             params: {
-              jobfairId: record.id,
-              enterpriseid: response.result.enterpriseIds,
+              JobFairId: record.id,
+              EnterpriseInfoId: response.result.enterpriseIds,
             },
           })
             .then((response2) => {
-              console.log("123", response2)
-              if (response2.result.records.length > 0) {
-                this.$message.error('企业已报名招聘会');
-
+              console.log('123', response2)
+              if (!response2.success) {
+                this.$message.error(response2.message)
                 return
               } else {
                 // this.$message.error('企业没报名招聘会');
@@ -832,22 +925,20 @@ export default {
                 // if (record.isselectionbooth == 0) {
                 this.toSignup(record)
               }
-
             })
             .catch(function (error) {
-              this.$message.error(error.message || '报名失败，请联系管理人员');
+              this.$message.error(error.message || '报名失败，请联系管理人员')
               // data.onError() // 返回报错
               console.log(error)
               return
             })
         })
         .catch(function (error) {
-          this.$message.error(error.message || '报名失败，请联系管理人员');
+          this.$message.error(error.message || '报名失败，请联系管理人员')
           // data.onError() // 返回报错
           console.log(error)
           return
         })
-
 
       // } else {
       //   this.zwvisible = true
@@ -877,8 +968,7 @@ export default {
             headers: {},
             params: { enterpriseInfoId: response.result.enterpriseIds, jobfairid: record.id },
           }).then((response2) => {
-
-            console.log('参会人员信息', response2.result.records.length)
+            console.log('招聘人员信息', response2.result.records.length)
             if (response2.result.records.length < 1) {
               this.formLabelAlign[0].jobFairId = this.jobfairinfo.id
               this.formLabelAlign[0].enterpriseInfoId = response.result.enterpriseIds
@@ -886,6 +976,7 @@ export default {
               this.formLabelAlign[0].name = ''
               this.formLabelAlign[0].post = ''
               this.formLabelAlign[0].phone = ''
+              this.formLabelAlign[0].oncamera = 0
               this.formLabelAlign[0].createTime = this.getNowFormatDate()
 
               this.formLabelAlign[1].jobFairId = this.jobfairinfo.id
@@ -894,9 +985,10 @@ export default {
               this.formLabelAlign[1].name = ''
               this.formLabelAlign[1].post = ''
               this.formLabelAlign[1].phone = ''
+              this.formLabelAlign[1].oncamera = 0
               this.formLabelAlign[1].createTime = this.getNowFormatDate()
               this.bmandtbryvisible = true
-              // this.$message.warning('该企业没有参会人员！')
+              // this.$message.warning('该企业没有招聘人员！')
               // return
             } else if (response2.result.records.length == 1) {
               this.formLabelAlign[0].jobFairId = response2.result.records[0].jobFairId
@@ -905,6 +997,7 @@ export default {
               this.formLabelAlign[0].name = response2.result.records[0].name
               this.formLabelAlign[0].post = response2.result.records[0].post
               this.formLabelAlign[0].phone = response2.result.records[0].phone
+              this.formLabelAlign[0].oncamera = response2.result.records[0].oncamera
               this.formLabelAlign[0].createTime = response2.result.records[0].createTime
               this.bmandtbryvisible = true
             } else {
@@ -1240,3 +1333,4 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 </style>
+
