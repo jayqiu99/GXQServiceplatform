@@ -183,18 +183,18 @@ export default {
     },
     preview(rec) {
       console.log('跳转', rec)
-      // window.location.href = 'http://123.57.236.82:8080/zqhr/jmreport/view/595838449579319296?id='+rec.id;
-      window.open('http://123.57.236.82:8080/zqhr/jmreport/view/621509149310300160?id=' + rec.id, '_blank')
-      // http://123.57.236.82:8080/zqhr/jmreport/view/595838449579319296?id=42
-      // this.$router.push('http://123.57.236.82:8080/zqhr/jmreport/view/595838449579319296?id=42');
+      // window.location.href = 'https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/595838449579319296?id='+rec.id;
+      window.open('https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/621509149310300160?id=' + rec.id, '_blank')
+      // https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/595838449579319296?id=42
+      // this.$router.push('https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/595838449579319296?id=42');
       // this.$router.push({path:'/testDemo',query:{setid:123456}});
     },
     topreviewtwo(rec) {
       console.log('跳转', rec)
-      // window.location.href = 'http://123.57.236.82:8080/zqhr/jmreport/view/595838449579319296?id='+rec.id;
-      window.open('http://123.57.236.82:8080/zqhr/jmreport/view/616122340938067968?id=' + rec.id, '_blank')
-      // http://123.57.236.82:8080/zqhr/jmreport/view/595838449579319296?id=42
-      // this.$router.push('http://123.57.236.82:8080/zqhr/jmreport/view/595838449579319296?id=42');
+      // window.location.href = 'https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/595838449579319296?id='+rec.id;
+      window.open('https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/616122340938067968?id=' + rec.id, '_blank')
+      // https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/595838449579319296?id=42
+      // this.$router.push('https://dwrlzy.jiahangit.com.cn/zqhr/jmreport/view/595838449579319296?id=42');
       // this.$router.push({path:'/testDemo',query:{setid:123456}});
     },
     exportData(rec) {
@@ -287,12 +287,25 @@ export default {
         if (res.success) {
           for (var i = 0; i < res.result.records.length; ++i) {
             res.result.records[i].enable = res.result.records[i].enable == 1 ? '已启用' : '未启用'
-            let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
-            let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
-            res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
-            let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
-            let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
-            res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
+
+            if (res.result.records[i].entrytimeStart != null) {
+                let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
+                let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
+
+                res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
+              }
+
+              if (res.result.records[i].holdingtimeStart != null) {
+                let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
+                let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
+                res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
+              }
+            // let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
+            // let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
+            // res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
+            // let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
+            // let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
+            // res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
           }
           this.dataSource = res.result.records
           console.log('数据列表', this.dataSource)

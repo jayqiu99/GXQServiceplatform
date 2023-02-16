@@ -3,7 +3,7 @@
       <a-upload
         name="file"
         :multiple="isMultiple"
-        action="http://123.57.236.82:8080/zqhr/base/upload"
+        action="https://dwrlzy.jiahangit.com.cn/zqhr/base/upload"
         :data="{systype:biaz}"
         :fileList="fileList"
         style="margin-left:5%"

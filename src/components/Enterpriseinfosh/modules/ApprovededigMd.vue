@@ -134,6 +134,12 @@
               <a-input placeholder="请输入所在地址" v-decorator.trim="['address', validatorRules.address]" />
             </a-form-item>
           </a-col>
+          <a-col :span="1">
+            <a-form-item label="" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <el-button type="primary" size="mini" style="margin-left: -160%;" @click="gdmapclick"
+                icon="el-icon-location-information" circle></el-button>
+            </a-form-item>
+          </a-col>
         </a-row>
         <a-row :gutter="12">
           <a-col :span="23" :pull="3">
@@ -246,6 +252,7 @@
       <a-button @click="handleSubmit" type="primary" :loading="confirmLoading">保存</a-button>
     </div>
     <mulit-modal ref="mulitFormOk" @ok="modalFormOk"></mulit-modal>
+    <gd-map ref="mapForm" @updateLocation="updateLocation" @ok="modalFormOk"></gd-map>
   </a-drawer>
 </template>
 
@@ -264,6 +271,7 @@ import { duplicateCheck } from '@/api/api'
 import JImageUpload from '../../../components/jeecg/JImageUpload'
 import UImageUpload from '../../../components/jeecg/upimagestwo'
 import MulitModal from './MultiMedia.vue'
+import GdMap from './Gdmap.vue'
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -280,6 +288,7 @@ export default {
     JSelectPosition,
     UImageUpload,
     MulitModal,
+    GdMap
   },
   data() {
     return {
@@ -463,6 +472,7 @@ export default {
       areaId: '', //区域
       areaname: '', //区域
       areassq: [], //区域
+      addressInfo: {}
     }
   },
   created() {
@@ -483,6 +493,67 @@ export default {
     this.getscaleList()
   },
   methods: {
+    updateLocation(Addr) {
+        console.log('位置信息：', Addr)
+        this.addressInfo = Addr;
+        this.exaupdata.address = Addr.orgAddr;
+
+        this.model = Object.assign({}, this.exaupdata)
+
+        this.$nextTick(() => {
+          this.form.setFieldsValue(
+            pick(
+              this.model,
+              'enterpriseName',
+              'trade',
+              'scale',
+              'address',
+              'area',
+              'synopsis',
+              'companyPrincipal',
+              'idcard',
+              'phone',
+              'creditCode',
+              'nature',
+              'email',
+              'isuploadpictures',
+              'isuploadvideo'
+            )
+          )
+        })
+      },
+    /** 确认地图地址 */
+    confirmMapAddress(addressInfo) {
+        this.addressInfo = addressInfo;
+        this.exaupdata.address = addressInfo.address;
+        console.log("更改完地址后", addressInfo);
+        this.model = Object.assign({}, this.exaupdata)
+        console.log("更改完地址后对象", this.model);
+        this.$nextTick(() => {
+          this.form.setFieldsValue(
+            pick(
+              this.model,
+              'enterpriseName',
+              'trade',
+              'scale',
+              'address',
+              'area',
+              'synopsis',
+              'companyPrincipal',
+              'idcard',
+              'phone',
+              'creditCode',
+              'nature',
+              'email',
+              'isuploadpictures',
+              'isuploadvideo'
+            )
+          )
+        })
+      },
+      gdmapclick() {
+        this.$refs.mapForm.show()
+      },
     areaonChange(res, op) {
       console.log('区域级联', op)
       console.log('区域级联长度', op.length)
@@ -550,7 +621,7 @@ export default {
       console.log('文件上传', logimageurl)
       setTimeout(() => {
         this.fileList = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.fileList.url = httpurla + logimageurl
         this.upimgstrurl = logimageurl
         // this.fileList.thumbUrl = record.logoAddress
@@ -563,7 +634,7 @@ export default {
       console.log('文件上传2', logimageurl)
       setTimeout(() => {
         this.wtsimglist = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.wtsimglist.url = httpurla + logimageurl
         this.wtsimgyrl = logimageurl
         console.log('图2', this.wtsimglist)
@@ -573,7 +644,7 @@ export default {
       console.log('文件上传2', logimageurl)
       setTimeout(() => {
         this.babimglist = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.babimglist.url = httpurla + logimageurl
         this.babimgurl = logimageurl
         console.log('图2', this.babimglist)
@@ -583,7 +654,7 @@ export default {
       console.log('文件上传2', logimageurl)
       setTimeout(() => {
         this.businessList = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.businessList.url = httpurla + logimageurl
         this.updataimgstrurl = logimageurl
         console.log('图2', this.businessList)
@@ -767,11 +838,11 @@ export default {
         // this.ExcelfileList.name = record.enterpriseName + "备案表"
         this.byidimg = record.logoAddress
         
-        this.byidimg = this.byidimg.replace('http://123.57.236.82:8080/zqhr', '')
+        this.byidimg = this.byidimg.replace('https://dwrlzy.jiahangit.com.cn/zqhr', '')
         // this.byidimg = this.byidimg.slice(34)
         console.log('保存截取后路径', this.byidimg)
         this.updataimgstrurl = record.businessLicenseAddress
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.fileList.url = record.logoAddress
         this.fileList.thumbUrl = record.logoAddress
         this.businessList.url = httpurla + record.businessLicenseAddress
@@ -990,7 +1061,7 @@ export default {
                 } else if (formData.enable == '已启用') {
                   formData.enable = 1
                 }
-                // var imgstr=this.upimgstrurl.replace('http://123.57.236.82:8080/','')
+                // var imgstr=this.upimgstrurl.replace('https://dwrlzy.jiahangit.com.cn/','')
                 // formData.logoAddress = this.upimgstrurl
                 formData.logoAddress = this.upimgstrurl
                 formData.businessLicenseAddress = this.updataimgstrurl
@@ -1073,7 +1144,11 @@ export default {
                   formData.area = this.areaname
                   formData.bdmAreaInfoId = this.areaId
                 }
-                console.log('修改数据对象', formData)
+                if (this.addressInfo.lon != null) {
+                  formData.longitude = this.addressInfo.lon;
+                  formData.latitude = this.addressInfo.lat;
+                }
+                console.log('修改数据对象1', formData)
                 obj = editenterprise(formData)
               }
               obj

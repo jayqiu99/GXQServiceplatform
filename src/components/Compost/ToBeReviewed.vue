@@ -571,7 +571,7 @@ export default {
       let params = this.getQueryParams() //查询条件
       console.log('查询条件')
       console.log('123', params)
-      var logoAddressUrl = 'http://123.57.236.82:8080/zqhr'
+      var logoAddressUrl = 'https://dwrlzy.jiahangit.com.cn/zqhr'
       enTemporaryList2(params).then(res => {
         if (res.success) {
           // for (var i = 0; i < res.result.records.length; ++i) {

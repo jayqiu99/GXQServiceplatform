@@ -36,13 +36,13 @@
             </a-form-item>
           </a-col>
           <a-col :md="7" :sm="8" :push="3">
-            <a-form-item
+            <!-- <a-form-item
               label="投递岗位"
               :labelCol="{ span: 6 }"
               :wrapperCol="{ span: 14, offset: 1 }"
             >
-              <a-input placeholder v-model="queryParam.postName"></a-input>
-            </a-form-item>
+              <a-input placeholder v-model="queryParam.postname"></a-input>
+            </a-form-item> -->
           </a-col>
           <a-col :md="7" :sm="8" :push="3">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
@@ -57,6 +57,9 @@
           </a-col>
         </a-row>
       </a-form>
+      <div class="table-operator" style="border-top: 5px">
+        <a-button @click="exportData" type="primary" icon="download">导出简历汇总</a-button>
+      </div>
       <a-table
         bordered
         ref="table"
@@ -102,6 +105,7 @@ export default {
       visible: false,
       statelable: '启用',
       // 查询条件
+      enterprise:{},
       queryParam: {
         name: '',
         idcard: '',
@@ -109,7 +113,7 @@ export default {
         education: '',
         enterpriseInfoId: '',
         phone:'',
-        postName:''
+        postname:''
       },
       // 表头
       columns: [
@@ -146,7 +150,7 @@ export default {
         {
           title: '投递岗位',
           align: 'center',
-          dataIndex: 'postName',
+          dataIndex: 'postName2',
           width: 150
         },
         {
@@ -191,7 +195,7 @@ export default {
       educationlist: [],
       url: {
         educationlist: '/base/list?type=education&pageNo=1&pageSize=1000',
-        // list: '/app/interview/receivelist',
+        list: '/app/interview/receivelist',
         enable: '/hall/curriculumvitae/enable'
       }
     }
@@ -205,6 +209,52 @@ export default {
     console.log('登录信息', store.getters.userInfo)
   },
   methods: {
+    exportData() {
+      // console.log("招聘会ID",this.queryParam.jobfairId);
+      var that = this,
+        queryParam = that.queryParam
+        ,enterprise=that.enterprise
+      console.log('查询条件', queryParam)
+      console.log('企业信息',enterprise)
+      if(queryParam.postname==undefined){
+        queryParam.postname=""
+      }
+      // return
+      this.$http({
+        url:
+          '/app/interview/exportXlsReceiveResume?enterpriseInfoId=' 
+          +
+          enterprise.enterpriseIds +
+          '&gender=' +
+          queryParam.gender +
+          '&postname=' +
+          queryParam.postname+'&education='+queryParam.education+'&phone='+queryParam.phone+'&name='+queryParam.name,
+        method: 'get',
+        responseType: 'arraybuffer', // 表明返回服务器返回的数据类型
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // data: {
+        //   jobfairid:rec.id
+        // },
+      })
+        .then((res) => {
+          //创建一个隐藏的a连接，
+          const link = document.createElement('a')
+          let blob = new Blob([res], { type: 'application/vnd.ms-excel;charset=UTF-8' })
+          link.style.display = 'none'
+          //设置连接
+          link.href = URL.createObjectURL(blob)
+          link.download = '企业收到简历汇总信息表'
+          document.body.appendChild(link)
+          //模拟点击事件
+          link.click()
+          //console.log("res",res);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     loadData(arg) {
       if (arg === 1) {
         this.ipagination.current = 1
@@ -220,7 +270,7 @@ export default {
       })
         .then(response => {
           console.log('企业信息', response.result)
-          
+            this.enterprise=response.result
             let params = this.getQueryParams() //查询条件
             params.enterpriseInfoId = response.result.enterpriseIds
             console.log('table参数', params)

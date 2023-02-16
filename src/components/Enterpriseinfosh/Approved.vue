@@ -421,7 +421,7 @@
         console.log('查询条件', this.areaname)
         console.log(params)
         params.area = this.areaname
-        var logoAddressUrl = 'http://123.57.236.82:8080/zqhr'
+        var logoAddressUrl = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         approvedList(params).then((res) => {
           console.log("res", res);
           if (res.success) {

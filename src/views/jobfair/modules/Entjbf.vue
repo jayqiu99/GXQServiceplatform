@@ -307,16 +307,27 @@
                         // this.ipagination.total = res.result.total
                     }
 
-                    let entrytime = record.entrytimeStart
-                    entrytime = entrytime.substr(0, 16)
-                    console.log('截取时间', entrytime)
-                    this.holdingtime[0] = entrytime + '至'
-                    this.holdingtime[1] = record.entrytimeEnd
+                    if (record.entrytimeStart != null && record.entrytimeStart != "待定") {
+                        let entrytime = record.entrytimeStart
+                        entrytime = entrytime.substr(0, 16)
+                        console.log('截取时间', entrytime)
+                        this.holdingtime[0] = entrytime + '至'
+                        this.holdingtime[1] = record.entrytimeEnd
+                    }else{
+                        this.holdingtime[0]="";
+                        this.holdingtime[1]="";
+                    }
 
-                    let holdingtimest = record.holdingtimeStart
-                    holdingtimest = holdingtimest.substr(0, 16)
-                    this.jbboothtime[0] = holdingtimest + '至'
-                    this.jbboothtime[1] = record.holdingtimeEnd
+                    if (record.holdingtimeStart != null && record.holdingtimeStart != "待定") {
+                        let holdingtimest = record.holdingtimeStart
+                        holdingtimest = holdingtimest.substr(0, 16)
+                        this.jbboothtime[0] = holdingtimest + '至'
+                        this.jbboothtime[1] = record.holdingtimeEnd
+                    }else{
+                        this.jbboothtime[0]="";
+                        this.jbboothtime[1]="";
+                    }
+
                     // console.log("修改对象2",this.holdingtime);
                     this.form.resetFields()
                     this.model = Object.assign({}, record)

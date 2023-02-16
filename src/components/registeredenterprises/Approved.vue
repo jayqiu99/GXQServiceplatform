@@ -139,13 +139,13 @@ export default {
           title: '招聘会名称',
           align: 'center',
           dataIndex: 'jobfairname',
-          width: 470,
+          width: 300,
         },
         {
           title: '报名企业名称',
           align: 'center',
           dataIndex: 'enterpriseName',
-          width: 310,
+          width: 300,
         },
         {
           title: '负责人名称',
@@ -158,12 +158,22 @@ export default {
           align: 'center',
           dataIndex: 'phone',
           width: 180,
+        }, {
+          title: '报名时间',
+          align: 'center',
+          dataIndex: 'entryTime',
+          width: 150,
+        },
+        {
+          title: '展位号',
+          align: 'center',
+          dataIndex: 'boothNumber',
+          width: 100,
         },
         {
           title: '审核状态',
           align: 'center',
           dataIndex: 'examinestate2',
-          width: 180,
           scopedSlots: { customRender: 'examinestatetext' },
         },
         {
@@ -204,8 +214,10 @@ export default {
       this.$refs.chyrmodalForm.edit(record)
     },
     exportData(){
+      var queryParam=this.queryParam
       console.log("招聘会ID",this.queryParam.jobfairId);
       
+      console.log("查询条件",queryParam)
       this.$http({
         url: '/hall/jobfairposition/export?jobfairid='+this.queryParam.jobfairId,
         method: 'get',
@@ -301,6 +313,7 @@ export default {
       return filterObj(param)
     },
     detail(record) {
+      record.module = 1;
       this.joblistparams.id = record.jobfairid
       this.$refs.enterpriseinfo.showDrawer(record,1)
       // jobfairList(this.joblistparams).then((res) => {

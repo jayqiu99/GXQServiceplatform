@@ -100,7 +100,9 @@
           </a-col>
           <a-col :span="9">
             <a-form-item label="所在地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input placeholder="请输入所在地址" v-decorator.trim="['address', validatorRules.address]" />
+              <a-input-search v-decorator.trim="['address', validatorRules.address]" style="width: 110%;"
+                placeholder="选择地址" enter-button @search="onSearchadd" />
+              <!-- <a-input placeholder="请输入所在地址" v-decorator.trim="['address', validatorRules.address]" /> -->
             </a-form-item>
           </a-col>
         </a-row>
@@ -258,6 +260,8 @@
     </div>
     <!-- <mulit-modal ref="mulitFormOk" @ok="modalFormOk"></mulit-modal> -->
     <ent-multimdedia ref="entmulitFormOk" @ok="modalFormOk"></ent-multimdedia>
+    <!-- <add-map ref="addmapshow" @confirmMapAddress="confirmMapAddress" @ok="modalFormOk"></add-map> -->
+    <add-map ref="addmapshow" @updateLocation="updateLocation" @ok="modalFormOk"></add-map>
   </a-drawer>
 </template>
 
@@ -277,6 +281,7 @@
   import UImageUpload from '../../../components/jeecg/upimagestwo'
   import MulitModal from './MultiMedia.vue'
   import EntMultimdedia from './EntMultimdedia.vue'
+  import AddMap from './mapadd.vue'
 
   function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -293,13 +298,14 @@
       JSelectPosition,
       UImageUpload,
       MulitModal,
-      EntMultimdedia
+      EntMultimdedia,
+      AddMap
     },
     data() {
       return {
         size: '',
-        dowbabimg: 'http://123.57.236.82:8080/zqhr/zqhrimg/sysEnterprise/ygbab.jpg',
-        dowwtsimg: 'http://123.57.236.82:8080/zqhr/zqhrimg/sysEnterprise/wts.png',
+        dowbabimg: 'https://dwrlzy.jiahangit.com.cn/zqhr/zqhrimg/sysEnterprise/ygbab.jpg',
+        dowwtsimg: 'https://dwrlzy.jiahangit.com.cn/zqhr/zqhrimg/sysEnterprise/wts.png',
         biaz: '',
         enterimageVisible: false, //多媒体上传（图片）
         enterpreviewimage: '', //多媒体上传（图片）
@@ -481,6 +487,7 @@
         areaId: '', //区域
         areaname: '', //区域
         areassq: [], //区域
+        addressInfo: {}
       }
     },
     created() {
@@ -501,6 +508,100 @@
       this.getscaleList()
     },
     methods: {
+      updateLocation(Addr) {
+        console.log('位置信息：', Addr)
+        this.addressInfo = Addr;
+        this.exaupdata.address = Addr.orgAddr;
+
+        this.model = Object.assign({}, this.exaupdata)
+
+        this.$nextTick(() => {
+          this.form.setFieldsValue(
+            pick(
+              this.model,
+              'enterpriseName',
+              'trade',
+              'scale',
+              'address',
+              'area',
+              'synopsis',
+              'companyPrincipal',
+              'idcard',
+              'phone',
+              'creditCode',
+              'nature',
+              'email',
+              'isuploadpictures',
+              'isuploadvideo'
+            )
+          )
+        })
+      },
+      // 百度转腾讯坐标
+      // bMapToQQMap(lng, lat) {
+      //   console.log("传入经纬度", lng, lat);
+      //   if (lng == null || lng == '' || lat == null || lat == '')
+      //     return [lng, lat];
+
+      //   var x_pi = 3.14159265358979324;
+      //   var x = parseFloat(lng) - 0.0065;
+      //   var y = parseFloat(lat) - 0.006;
+      //   var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+      //   var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+      //   var lng = (z * Math.cos(theta)).toFixed(7);
+      //   var lat = (z * Math.sin(theta)).toFixed(7);
+
+      //   return [lng, lat];
+      // },
+      // 百度转腾讯坐标
+      // qqMapToBMap(lng, lat) {
+      //   if (lng == null || lng == '' || lat == null || lat == '')
+      //     return [lng, lat];
+
+      //   var x_pi = 3.14159265358979324;
+      //   var x = parseFloat(lng);
+      //   var y = parseFloat(lat);
+      //   var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+      //   var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+      //   var lng = (z * Math.cos(theta) + 0.0065).toFixed(5);
+      //   var lat = (z * Math.sin(theta) + 0.006).toFixed(5);
+      //   return [lng, lat];
+      // },
+      /** 确认地图地址 */
+      confirmMapAddress(addressInfo) {
+        this.addressInfo = addressInfo;
+        this.exaupdata.address = addressInfo.address;
+        console.log("更改完地址后", addressInfo);
+
+        this.model = Object.assign({}, this.exaupdata)
+
+        this.$nextTick(() => {
+          this.form.setFieldsValue(
+            pick(
+              this.model,
+              'enterpriseName',
+              'trade',
+              'scale',
+              'address',
+              'area',
+              'synopsis',
+              'companyPrincipal',
+              'idcard',
+              'phone',
+              'creditCode',
+              'nature',
+              'email',
+              'isuploadpictures',
+              'isuploadvideo'
+            )
+          )
+        })
+      },
+      onSearchadd() {
+        // alert("地址选择");
+
+        this.$refs.addmapshow.show()
+      },
       downBabExcel() {
         window.open();
       },
@@ -571,7 +672,7 @@
         console.log('文件上传', logimageurl)
         setTimeout(() => {
           this.fileList = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.fileList.url = httpurla + logimageurl
           this.upimgstrurl = logimageurl
           // this.fileList.thumbUrl = record.logoAddress
@@ -584,7 +685,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.wtsimglist = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.wtsimglist.url = httpurla + logimageurl
           this.wtsimgyrl = logimageurl
           console.log('图2', this.wtsimglist)
@@ -594,7 +695,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.babimglist = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.babimglist.url = httpurla + logimageurl
           this.babimgurl = logimageurl
           console.log('图2', this.babimglist)
@@ -604,7 +705,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.businessList = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.businessList.url = httpurla + logimageurl
           this.updataimgstrurl = logimageurl
           console.log('图2', this.businessList)
@@ -807,7 +908,7 @@
           this.byidimg = this.byidimg.slice(34)
           console.log('保存截取后路径', this.byidimg)
           this.updataimgstrurl = record.businessLicenseAddress
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.fileList.url = record.logoAddress
           this.fileList.thumbUrl = record.logoAddress
           this.businessList.url = httpurla + record.businessLicenseAddress
@@ -822,6 +923,7 @@
         that.userId = record.id
         that.visible = true
         that.model = Object.assign({}, record)
+
         that.$nextTick(() => {
           that.form.setFieldsValue(
             pick(
@@ -992,12 +1094,12 @@
             } else if (formData.enable == '已启用') {
               formData.enable = 1
             }
-            // var imgstr=this.upimgstrurl.replace('http://123.57.236.82:8080/','')
+            // var imgstr=this.upimgstrurl.replace('https://dwrlzy.jiahangit.com.cn/','')
             // formData.logoAddress = this.upimgstrurl
             // console.log('企业logo333', this.upimgstrurl)
             // debugger;
             if (this.upimgstrurl == undefined || this.upimgstrurl == "") {
-              var imgstr = formData.logoAddress.replace('http://123.57.236.82:8080/zqhr', '')
+              var imgstr = formData.logoAddress.replace('https://dwrlzy.jiahangit.com.cn/zqhr', '')
               formData.logoAddress = imgstr
               // console.log('企业logo222', imgstr)
 
@@ -1010,14 +1112,22 @@
             formData.poweraTtorneyAddress = this.wtsimgyrl
             formData.employmentFilingAddress = this.babimgurl
             formData.updateBy = store.getters.userInfo.username
+
+            if (this.addressInfo.lon != null) {
+              console.log("进来经纬度")
+              formData.longitude = this.addressInfo.lon;
+              formData.latitude = this.addressInfo.lat;
+            }
+
           }
           if (this.areaname != '') {
             formData.area = this.areaname
             formData.bdmAreaInfoId = this.areaId
           }
-          // console.log('修改备案表图片', this.babimgurl)
-          
+          console.log('经纬度', this.addressInfo)
+
           console.log('修改结果对象1122', formData)
+          console.log('修改结果对象地址', this.addressInfo)
           this.axios({
             method: 'post',
             url: '/hall/enterprise/EnterpriseTemporaryUpdate?isimport=0',
@@ -1156,7 +1266,7 @@
                   formData.enable = 1
                 }
                 if (this.upimgstrurl == undefined || this.upimgstrurl == "") {
-                  var imgstr = formData.logoAddress.replace('http://123.57.236.82:8080/zqhr', '')
+                  var imgstr = formData.logoAddress.replace('https://dwrlzy.jiahangit.com.cn/zqhr', '')
                   formData.logoAddress = imgstr
                   // console.log('企业logo222', imgstr)
 
@@ -1170,7 +1280,13 @@
                 formData.poweraTtorneyAddress = this.wtsimgyrl
                 formData.businessLicenseAddress = this.updataimgstrurl
                 formData.updateBy = store.getters.userInfo.username
-                 
+
+                if (this.addressInfo.lon != null) {
+                  // console.log("进来经纬度")
+                  formData.longitude = this.addressInfo.lon;
+                  formData.latitude = this.addressInfo.lat;
+                }
+
                 console.log('修改区域', this.areaname)
                 if (this.areaname != '') {
                   formData.area = this.areaname
@@ -1410,3 +1526,6 @@
     border-radius: 0 0 2px 2px;
   }
 </style>
+<!-- <style scoped>
+  @import './mapadd.vue';
+  </style> -->

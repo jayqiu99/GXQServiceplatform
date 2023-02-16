@@ -33,7 +33,7 @@ export default {
   methods: {
     showDrawer(record) {
       console.log('附件预览', record)
-      var headerimg = 'http://123.57.236.82:8080/zqhr'
+      var headerimg = 'https://dwrlzy.jiahangit.com.cn/zqhr'
       this.imgurl = headerimg + record.photographResumeAddress
       
       console.log('放大附件预览', this.srcList)

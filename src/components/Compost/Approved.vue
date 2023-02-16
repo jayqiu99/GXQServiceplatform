@@ -633,13 +633,14 @@ export default {
       var jobfairid = that.queryParam.jobfairid
       var enterpriseName = that.queryParam.enterpriseName
       var displaysign = that.queryParam.displaysign
-      if (displaysign == '请选择') {
+      if (displaysign == '请选择' || displaysign == '') {
         displaysign = -1
       }
       //var scale = that.queryParam.scale
       console.log('jobfairid', jobfairid)
       console.log('enterpriseName', enterpriseName)
       console.log('displaySign', displaysign)
+      displaysign=0;
       this.$http({
         url:
           '/hall/position/exportXlsJob?displaysign=' +

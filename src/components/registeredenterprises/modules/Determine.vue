@@ -140,6 +140,7 @@ export default {
       this.Onekeyobj.jobFairId=this.jobOnekeyobj.jobfairid;
       this.Onekeyobj.remarks=this.stateremarks;
       this.Onekeyobj.remarksnumber=this.remarksnumber;
+      this.Onekeyobj.module=this.jobOnekeyobj.module;
       console.log("其他的备注",this.Onekeyobj);
       // console.log("其他的备注2",this.jobOnekeyobj);
       getOnekey(this.Onekeyobj).then((res) => {

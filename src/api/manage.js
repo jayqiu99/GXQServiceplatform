@@ -12,7 +12,7 @@ const api = {
 export default api
 //getUrl
 export function getUrl(){
-  return 'http://123.57.236.82:8080/zqhr'
+  return 'https://dwrlzy.jiahangit.com.cn/zqhr'
 }
 //post
 export function postAction(url,parameter) {
@@ -181,5 +181,5 @@ export function getFileAccessHttpUrl(avatar,subStr) {
 export function getimagesHttpUrl(avatar,subStr) {
   // console.log("上传返回的端口1",avatar);
   // console.log("上传返回的端口2",subStr);
-  return 'http://123.57.236.82:8080/zqhr'+avatar
+  return 'https://dwrlzy.jiahangit.com.cn/zqhr'+avatar
 }

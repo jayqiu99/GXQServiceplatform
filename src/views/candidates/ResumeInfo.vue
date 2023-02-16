@@ -315,6 +315,40 @@
                   </tr>
                 </tbody>
               </table>
+              <table cellspacing="0" cellpadding="0" border="0" class="box">
+                <tbody>
+                  <tr>
+                    <td class="plate1">技能/证书</td>
+                  </tr>
+                  <tr>
+                    <td class="tba">
+                      <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td class="tba">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td class="p15">
+                                  <table cellspacing="0" cellpadding="0" border="0">
+                                    <tbody>
+                                      <tr>
+                                        <td valign="top" class="time">
+                                          {{
+                                          formData.skillCertificate
+                                          }}
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </td>
           </tr>
         </tbody>

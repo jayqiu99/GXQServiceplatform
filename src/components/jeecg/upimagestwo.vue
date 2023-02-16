@@ -3,7 +3,7 @@
     name="file"
     listType="picture-card"
     :multiple="isMultiple"
-    action="http://123.57.236.82:8080/zqhr/base/upload"
+    action="https://dwrlzy.jiahangit.com.cn/zqhr/base/upload"
     :data="{systype:biaz}"
     :fileList="fileList"
     :beforeUpload="beforeUpload"

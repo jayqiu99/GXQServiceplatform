@@ -298,12 +298,26 @@ export default {
         if (res.success) {
           for (var i = 0; i < res.result.records.length; ++i) {
             res.result.records[i].enable = res.result.records[i].enable == 1 ? '已启用' : '未启用'
-            let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
-            let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
-            res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
-            let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
-            let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
-            res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
+
+            if (res.result.records[i].entrytimeStart != null) {
+                let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
+                let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
+
+                res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
+              }
+
+              if (res.result.records[i].holdingtimeStart != null) {
+                let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
+                let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
+                res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
+              }
+
+            // let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
+            // let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
+            // res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
+            // let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
+            // let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
+            // res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
           }
           this.dataSource = res.result.records
           console.log('数据列表', this.dataSource)

@@ -370,7 +370,7 @@ export default {
       }
       let params = this.getQueryParams() //查询条件
       params.area=this.areaname
-      var logoAddressUrl = 'http://123.57.236.82:8080/zqhr'
+      var logoAddressUrl = 'https://dwrlzy.jiahangit.com.cn/zqhr'
       auditList(params).then((res) => {
         if (res.success) {
           for (var i = 0; i < res.result.records.length; ++i) {

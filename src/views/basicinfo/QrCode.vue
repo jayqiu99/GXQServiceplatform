@@ -81,7 +81,7 @@ export default {
         let params = this.qrcodeparams
         genqrcode(params).then((res) => {
           if (res.success) {
-            let weburl = 'http://123.57.236.82:8080/zqhr'
+            let weburl = 'https://dwrlzy.jiahangit.com.cn/zqhr'
             this.previewImage = weburl + res.result
             this.erurl = weburl + res.result
             this.$message.success(res.message)
@@ -96,7 +96,7 @@ export default {
     },
   },
   mounted() {
-    this.previewImage = 'http://123.57.236.82:8080/zqhr/zqhrimg/publicImg/bca341b7aa392d4c45faaec01f3bf46.png'
+    this.previewImage = 'https://dwrlzy.jiahangit.com.cn/zqhr/zqhrimg/publicImg/bca341b7aa392d4c45faaec01f3bf46.png'
   },
 }
 </script>

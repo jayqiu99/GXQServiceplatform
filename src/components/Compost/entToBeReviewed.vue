@@ -576,7 +576,7 @@ export default {
           let params = this.getQueryParams() //查询条件
           params.enterpriseid = response.result.enterpriseIds
           console.log('table参数', params)
-          //   var logoAddressUrl = 'http://123.57.236.82:8080/zqhr'
+          //   var logoAddressUrl = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           enTemporaryList3(params).then((res) => {
             console.log('table数', res)
             if (params.enterpriseid == '' || params.enterpriseid == null) {

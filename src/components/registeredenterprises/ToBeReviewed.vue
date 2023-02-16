@@ -5,13 +5,13 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="12">
           <a-col :md="17" :sm="8" :push="2">
-            <a-form-item  label="招聘会名称" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
-              <a-select style="margin-left: -3.7%;" v-model="queryParam.jobfairId">
+            <a-form-item label="招聘会名称" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
+              <a-select style="margin-left: -3.7%" v-model="queryParam.jobfairId">
                 <a-select-option v-for="d in jobfairdata" :key="d.id" :value="d.id">{{ d.name }}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
-         
+
           <!-- <a-col :md="7" :sm="8" :push="3">
             <a-form-item label="企业名称" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
                <a-input placeholder v-model="queryParam.enterpriseName"></a-input>
@@ -21,10 +21,10 @@
         <a-row :gutter="12">
           <a-col :md="9" :sm="8" :push="2">
             <a-form-item label="企业名称" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
-               <a-input placeholder v-model="queryParam.enterpriseName"></a-input>
+              <a-input placeholder v-model="queryParam.enterpriseName"></a-input>
             </a-form-item>
           </a-col>
-          <!-- <a-col :md="10" :sm="8" :push="2">
+          <!-- <a-col :md="7" :sm="8" :push="2">
             <a-form-item label="联系电话　" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
               <a-input placeholder v-model="queryParam.phone"></a-input>
             </a-form-item>
@@ -47,6 +47,9 @@
           </a-col>
         </a-row>
       </a-form>
+      <div class="table-operator" style="border-top: 5px">
+        <a-button @click="exportData" type="primary" icon="download">导出查询结果</a-button>
+      </div>
       <a-table
         ref="table"
         bordered
@@ -110,7 +113,7 @@ import Vue from 'vue'
 export default {
   name: 'DictList',
   mixins: [JeecgListMixin],
-  components: { EnterpriseInfo, AddModal, JInput, InvitationJob,SeeModal },
+  components: { EnterpriseInfo, AddModal, JInput, InvitationJob, SeeModal },
   data() {
     return {
       visible: false,
@@ -135,31 +138,42 @@ export default {
           title: '招聘会名称',
           align: 'center',
           dataIndex: 'jobfairname',
-          width: 470,
+          width: 350,
         },
         {
           title: '报名企业名称',
           align: 'center',
           dataIndex: 'enterpriseName',
-          width: 310,
+          width: 300,
         },
         {
-          title: '负责人名称',
+          title: '负责人',
           align: 'center',
           dataIndex: 'companyPrincipal',
-          width: 180,
+          width: 150,
         },
         {
           title: '联系电话',
           align: 'center',
           dataIndex: 'phone',
-          width: 180,
+          width: 130,
+        },
+        {
+          title: '报名时间',
+          align: 'center',
+          dataIndex: 'entryTime',
+          width: 150,
+        },
+        {
+          title: '展位号',
+          align: 'center',
+          dataIndex: 'boothNumber',
+          width: 100,
         },
         {
           title: '审核状态',
           align: 'center',
           dataIndex: 'examinestate2',
-          width: 180,
           scopedSlots: { customRender: 'examinestatetext' },
         },
         {
@@ -196,7 +210,49 @@ export default {
     this.getJobfairList()
   },
   methods: {
-    chyrList(record){
+    exportData() {
+      // console.log("招聘会ID",this.queryParam.jobfairId);
+      var that = this,
+        queryParam = that.queryParam
+      console.log('查询条件', queryParam)
+      // return
+      this.$http({
+        url:
+          '/hall/entryenterprise/export?jobfairId=' +
+          queryParam.jobfairId +
+          '&enterpriseName=' +
+          queryParam.enterpriseName +
+          '&examinestate2=0&phone=' +
+          queryParam.phone +
+          '&examinestate=' +
+          queryParam.examinestate,
+        method: 'get',
+        responseType: 'arraybuffer', // 表明返回服务器返回的数据类型
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // data: {
+        //   jobfairid:rec.id
+        // },
+      })
+        .then((res) => {
+          //创建一个隐藏的a连接，
+          const link = document.createElement('a')
+          let blob = new Blob([res], { type: 'application/vnd.ms-excel;charset=UTF-8' })
+          link.style.display = 'none'
+          //设置连接
+          link.href = URL.createObjectURL(blob)
+          link.download = '企业报名审核汇总'
+          document.body.appendChild(link)
+          //模拟点击事件
+          link.click()
+          //console.log("res",res);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    chyrList(record) {
       this.$refs.chyrmodalForm.edit(record)
     },
     unexconfirm(reId) {
@@ -266,8 +322,9 @@ export default {
       return filterObj(param)
     },
     detail(record) {
+      record.module = 0
       this.joblistparams.id = record.jobfairid
-      this.$refs.enterpriseinfo.showDrawer(record,0)
+      this.$refs.enterpriseinfo.showDrawer(record, 0)
       // jobfairList(this.joblistparams).then((res) => {
       //   if (res.success) {
       //     this.timeis = res.result.records[0].holdingtimeOverdue
@@ -299,7 +356,7 @@ export default {
       }
       this.timer = setInterval(() => {
         that.loadData()
-      }, 10000)
+      }, 20000)
     },
     clearTimer() {
       clearInterval(this.timer)

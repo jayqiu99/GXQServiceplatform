@@ -485,7 +485,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.babimglist = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.babimglist.url = httpurla + logimageurl
           this.babimgurl = logimageurl
           console.log('图2', this.babimglist)
@@ -495,7 +495,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.wtsimglist = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.wtsimglist.url = httpurla + logimageurl
           this.wtsimgyrl = logimageurl
           console.log('图2', this.wtsimglist)
@@ -537,7 +537,7 @@
         console.log('文件上传', logimageurl)
         setTimeout(() => {
           this.fileList = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.fileList.url = httpurla + logimageurl
           this.upimgstrurl = logimageurl
           // this.fileList.thumbUrl = record.logoAddress
@@ -550,7 +550,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.businessList = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.businessList.url = httpurla + logimageurl
           this.updataimgstrurl = logimageurl
           console.log('图2', this.businessList)
@@ -727,7 +727,7 @@
           this.byidimg = this.byidimg.slice(37)
           console.log('保存截取后路径', this.byidimg)
           this.updataimgstrurl = record.businessLicenseAddress
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.fileList.url = httpurla + record.logoAddress
           this.fileList.thumbUrl = record.logoAddress
           this.businessList.url = httpurla + record.businessLicenseAddress

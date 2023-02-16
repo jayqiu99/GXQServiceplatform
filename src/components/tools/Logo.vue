@@ -5,7 +5,7 @@
       <!-- update-begin- author:sunjianlei --- date:20190814 --- for: logo颜色根据主题颜色变化 -->
       <img v-if="navTheme === 'dark'" src="~@/assets/logo-white.png" alt="logo">
       
-      <img v-else src="~@/assets/zqrlzy.png" alt="logo" style="margin-left:-10%;width:110%;height:40%">
+      <img v-else src="~@/assets/gxqrlzy.png" alt="logo" style="margin-left:-25%;width:140%;">
       <!-- update-begin- author:sunjianlei --- date:20190814 --- for: logo颜色根据主题颜色变化 -->
       <!-- <span>肇庆市人力资源社会保障局</span> -->
       <!-- <h3 v-if="showTitle">{{ title }}</h3> -->

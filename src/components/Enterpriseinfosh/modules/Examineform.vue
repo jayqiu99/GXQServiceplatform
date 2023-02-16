@@ -537,7 +537,7 @@ export default {
       console.log('文件上传2', logimageurl)
       setTimeout(() => {
         this.babimglist = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.babimglist.url = httpurla + logimageurl
         this.babimgurl = logimageurl
         console.log('图2', this.babimglist)
@@ -547,7 +547,7 @@ export default {
       console.log('文件上传2', logimageurl)
       setTimeout(() => {
         this.wtsimglist = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.wtsimglist.url = httpurla + logimageurl
         this.wtsimgyrl = logimageurl
         console.log('图2', this.wtsimglist)
@@ -566,7 +566,7 @@ export default {
       console.log('文件上传', logimageurl)
       setTimeout(() => {
         this.fileList = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.fileList.url = httpurla + logimageurl
         this.upimgstrurl = logimageurl
         // this.fileList.thumbUrl = record.logoAddress
@@ -579,7 +579,7 @@ export default {
       console.log('文件上传2', logimageurl)
       setTimeout(() => {
         this.businessList = {}
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.businessList.url = httpurla + logimageurl
         this.updataimgstrurl = logimageurl
         console.log('图2', this.businessList)
@@ -696,7 +696,7 @@ export default {
       console.log('对象审核：', record)
       console.log('logo对象：', record.logoAddress.slice(0, 6))
       if (record.logoAddress.slice(0, 6) == 'https:') {
-        record.logoAddress = record.logoAddress.replace('http://123.57.236.82:8080/zqhr', '')
+        record.logoAddress = record.logoAddress.replace('https://dwrlzy.jiahangit.com.cn/zqhr', '')
         // record.logoAddress = record.logoAddress.slice(34)
       }
       console.log('logo截取对象：', record.logoAddress)
@@ -743,7 +743,7 @@ export default {
         // this.imgstrurl = this.imgstrurl.slice(34)
         // console.log('截取后路径2', this.imgstrurl)
         this.updataimgstrurl = record.businessLicenseAddress
-        var httpurla = 'http://123.57.236.82:8080/zqhr'
+        var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         this.fileList.url = httpurla + record.logoAddress
         this.fileList.thumbUrl = record.logoAddress
         this.businessList.url = httpurla + record.businessLicenseAddress

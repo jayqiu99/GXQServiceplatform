@@ -144,22 +144,28 @@ export default {
           width: 250,
         },
         {
-          title: '负责人名称',
+          title: '负责人',
           align: 'center',
           dataIndex: 'companyPrincipal',
-          width: 150,
+          width: 110,
         },
         {
           title: '联系电话',
           align: 'center',
           dataIndex: 'phone',
-          width: 150,
+          width: 140,
+        },
+        {
+          title: '展位号',
+          align: 'center',
+          dataIndex: 'boothNumber',
+          width: 100,
         },
         {
           title: '审核状态',
           align: 'center',
           dataIndex: 'examinestate2',
-          width: 150,
+          width: 110,
           scopedSlots: { customRender: 'examinestatetext' },
         },
         {
@@ -272,6 +278,7 @@ export default {
       return filterObj(param)
     },
     detail(record) {
+      record.module = -1;
       this.joblistparams.id = record.jobfairid
       this.$refs.enterpriseinfo.showDrawer(record,-1)
       // jobfairList(this.joblistparams).then((res) => {

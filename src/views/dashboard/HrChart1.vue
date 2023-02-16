@@ -69,42 +69,56 @@
 
       <!-- :class="fordiv(i)" -->
       <div v-for="(item, i) in bMdatesource">
-        <el-alert title="" :closable="false" class="leftdivcss" type="success"
+        <el-alert title="" v-if="bMdatesource[i].holdingtimeDate !== null " :closable="false" class="leftdivcss" type="success"
           style="width: 15%;float:left;height: 95px;" description="">
           <div slot="title" class="header-title">
             <span class="title-name">{{bMdatesource[i].holdingtimeDate}}</span>
+            <!-- <span class="title-name">待定</span> -->
           </div>
           <slot>
             <span class="el-alert__description">{{bMdatesource[i].holdingtimeWeek}}</span>
           </slot>
         </el-alert>
+        <el-alert title="" v-if="bMdatesource[i].holdingtimeDate == null " :closable="false" class="leftdivcss" type="success"
+          style="width: 15%;float:left;height: 95px;" description="">
+          <div slot="title" class="header-title" style="width: 200%;">
+            <span class="title-name" style="margin-left: 20%;font-weight: 900;">待定</span>
+          </div>
+          <!-- <slot>
+            <span class="el-alert__description">{{bMdatesource[i].holdingtimeWeek}}</span>
+          </slot> -->
+        </el-alert>
+
         <div v-on:click="clickalert(item)">
-        <el-alert title="" style="width: 75%;float:left;height: 95px;" :closable="false" type="info">
-          <div slot="title" class="header-title">
-            <span class="title-name">{{bMdatesource[i].name}}</span>
-          </div>
-          <div style="width: 100%;">
-            <slot style="display: flex;">
-              <span class="el-alert__description">地点：{{bMdatesource[i].address | ellipsis}} </span>
-              <span class="el-alert__description">&nbsp;&nbsp;&nbsp;&nbsp;已参会企业：<span style="color: coral;">
-                  {{bMdatesource[i].enterpriseTotal}}</span></span>
-              <span class="el-alert__description">&nbsp;&nbsp;&nbsp;&nbsp;剩余展位：<span style="color: coral;">
-                  {{bMdatesource[i].surplusBooth}}</span></span>
-              <span class="el-alert__description">&nbsp;&nbsp;&nbsp;&nbsp;我的报名状态：<span style="color: coral;">
-                  {{bMdatesource[i].examinestate}}</span></span>
-            </slot>
-          </div>
-          <!-- <div style="width: 70%;margin-top: -3%;position: absolute;padding-left: 89%;" v-on:click="clickalert()">
+          <el-alert title="" style="width: 75%;float:left;height: 95px;" :closable="false" type="info">
+            <div slot="title" class="header-title">
+              <span class="title-name">{{bMdatesource[i].name}}</span>
+            </div>
+            <div style="width: 100%;">
+              <slot style="display: flex;">
+                <span class="el-alert__description">地点：{{bMdatesource[i].address | ellipsis}} </span>
+                <span class="el-alert__description">&nbsp;&nbsp;&nbsp;&nbsp;已参会企业：<span style="color: coral;">
+                    {{bMdatesource[i].enterpriseTotal}}</span></span>
+                <span class="el-alert__description">&nbsp;&nbsp;&nbsp;&nbsp;剩余展位：<span style="color: coral;">
+                    {{bMdatesource[i].surplusBooth}}</span></span>
+                <span class="el-alert__description">&nbsp;&nbsp;&nbsp;&nbsp;我的报名状态：<span style="color: coral;">
+                    {{bMdatesource[i].examinestate}}</span></span>
+              </slot>
+            </div>
+            <!-- <div style="width: 70%;margin-top: -3%;position: absolute;padding-left: 89%;" v-on:click="clickalert()">
         <el-button class="butclass" type="primary" @click="clickalerttwo">立即报名</el-button>
       </div> -->
 
-        </el-alert>
-      </div>
+          </el-alert>
+        </div>
         <el-alert title="" :closable="false" center style="width: 10%;float:left;height: 95px;">
           <div>
-            <el-button v-if="bMdatesource[i].entrytimeOverdue != '已过期'" class="butclass" type="primary"
-              @click="clickalerttwo(bMdatesource[i])">立即报名</el-button>
-              <el-button v-if="bMdatesource[i].entrytimeOverdue == '已过期'" type="info" plain disabled>报名已截止</el-button>
+            <router-link to='/jobfair/entjobfairbm'>
+              <el-button v-if="bMdatesource[i].entrytimeOverdue != '已过期' && bMdatesource[i].examinestate !='已报名'"
+                class="butclass" type="primary" @click="clickalerttwo(bMdatesource[i])">立即报名</el-button>
+            </router-link>
+
+            <el-button v-if="bMdatesource[i].entrytimeOverdue == '已过期'" type="info" plain disabled>报名已截止</el-button>
           </div>
 
         </el-alert>
@@ -140,7 +154,7 @@
       <a-row :gutter="24">
         <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
           <a-card :loading="loading" :bordered="false" title="最新人才">
-            <a slot="extra" v-if="isShow" href="http://www.gdjxfb.com/candidates/CandidateList">更多</a>
+            <a slot="extra" v-if="isShow" href="http://zqgxjob.gxzhdw.cn:1022/candidates/CandidateList">更多</a>
             <div style="font-size: 20px">
               <a-list :data-source="listdata">
                 <a-list-item slot="renderItem" slot-scope="item, index">
@@ -160,7 +174,7 @@
 
         <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
           <a-card :loading="loading" :bordered="false" title="最新岗位">
-            <a slot="extra" v-if="isShow" href="http://www.gdjxfb.com/recruitmentposition/post">更多</a>
+            <a slot="extra" v-if="isShow" href="http://zqgxjob.gxzhdw.cn:1022/recruitmentposition/post">更多</a>
             <div>
               <a-list item-layout="horizontal" :data-source="postlistdata">
                 <a-list-item slot="renderItem" slot-scope="item">
@@ -262,7 +276,7 @@
         yAxisName: ['数量'], //单位
       }
       return {
-        addchpo:[],
+        addchpo: [],
         SignupformData: {
           createBy: '',
           createTime: '',
@@ -456,16 +470,16 @@
             this.SignupformData.createTime = this.getNowFormatDate()
             this.SignupformData.enterpriseInfoId = response.result.enterpriseIds
             this.SignupformData.jobFairId = this.jobfairinfo.id
-            console.log('报名信息', this.SignupformData) 
-            
-                  if(this.formLabelAlign[1].name==''){
-                    // console.log('参会报名信息1111',  this.formLabelAlign[1])
-                    this.addchpo[0]=this.formLabelAlign[0];
-                  }else{
-                    this.addchpo=this.formLabelAlign;
-                  }
-                  // console.log('参会报名信息1111',  this.addchpo)
-                  // console.log('参会报名信息2222',  this.formLabelAlign)
+            console.log('报名信息', this.SignupformData)
+
+            if (this.formLabelAlign[1].name == '') {
+              // console.log('参会报名信息1111',  this.formLabelAlign[1])
+              this.addchpo[0] = this.formLabelAlign[0];
+            } else {
+              this.addchpo = this.formLabelAlign;
+            }
+            // console.log('参会报名信息1111',  this.addchpo)
+            // console.log('参会报名信息2222',  this.formLabelAlign)
             this.axios({
               method: 'post',
               url: '/hall/entryenterprise/entry',
@@ -476,8 +490,8 @@
               .then((restt) => {
                 if (restt.success) {
                   this.$message.success(restt.message)
-                  
-                  console.log("报名添加参会人员1", this.formLabelAlign);
+
+                  console.log("报名添加参会人员11234567890-", this.formLabelAlign);
                   console.log("报名添加参会人员2", this.addchpo);
                   this.axios({
                     method: 'post',
@@ -491,7 +505,7 @@
                         // this.$message.success(response.message) 
                         this.bmandtbryvisible = false;
                         // this.bMclick();
-                      } else { 
+                      } else {
                         this.$message.warning(response.message)
                         // this.bMclick();
                       }
@@ -499,7 +513,7 @@
                     .catch(function (error) {
                       console.log(error)
                     })
-                    this.bMclick();
+                  this.bMclick();
                 } else {
                   this.$message.warning(restt.message)
                 }
@@ -538,6 +552,7 @@
             // params.enable = getparams.enable
             // params.holdingtimeOverdue = getparams.holdingtimeOverdue
             params.enterpriseinfoid = response.result.enterpriseIds
+            params.isexisting = 1;
             console.log('table参数2', params)
             // entbmjobfairList(params).then((res) => {
             this.axios({
@@ -602,12 +617,24 @@
                         res.result.records[i].examinestate = '已报名'
                       }
 
-                      let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
-                      let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
-                      res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
-                      let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
-                      let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
-                      res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
+                      if (res.result.records[i].entrytimeStart != null) {
+                        let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
+                        let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
+
+                        res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
+                      }
+
+                      if (res.result.records[i].holdingtimeStart != null) {
+                        let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
+                        let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
+                        res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
+                      }
+                      // let jentrytimeStart = res.result.records[i].entrytimeStart.substr(0, 16)
+                      // let jentrytimeEnd = res.result.records[i].entrytimeEnd.substr(0, 16)
+                      // res.result.records[i].entrytimeStart = jentrytimeStart + ' 至 ' + jentrytimeEnd
+                      // let jholdingtimeStart = res.result.records[i].holdingtimeStart.substr(0, 16)
+                      // let jholdingtimeEnd = res.result.records[i].holdingtimeEnd.substr(0, 16)
+                      // res.result.records[i].holdingtimeStart = jholdingtimeStart + ' 至 ' + jholdingtimeEnd
                     }
                     this.bMdatesource = res.result.records
                     console.log('报名数据列表', this.bMdatesource)
@@ -633,70 +660,70 @@
       },
       clickalerttwo(record) {
         console.log("conconcconc2222", record);
-        this.jobfairinfo = record;
+        // this.jobfairinfo = record;
 
-        var departn = localStorage.getItem('departId')
-        this.axios({
-          method: 'get',
-          url: '/sys/getenterprisebyuser',
-          headers: {},
-          params: { userid: store.getters.userInfo.id, departid: departn },
-        })
-          .then((response) => {
-            console.log('企业信息', response.result)
+        // var departn = localStorage.getItem('departId')
+        // this.axios({
+        //   method: 'get',
+        //   url: '/sys/getenterprisebyuser',
+        //   headers: {},
+        //   params: { userid: store.getters.userInfo.id, departid: departn },
+        // })
+        //   .then((response) => {
+        //     console.log('企业信息', response.result)
 
 
-            this.axios({
-              method: 'get',
-              url: '/app/staff/list',
-              headers: {},
-              params: { enterpriseInfoId: response.result.enterpriseIds, jobfairid: record.id },
-            })
-              .then((response) => {
-                console.log('参会人员信息', response.result.records.length)
-                console.log('参会人员信息', response.result.records)
-                if (response.result.records.length < 1) {
-                  this.formLabelAlign[0].jobFairId = this.jobfairinfo.id
-                  this.formLabelAlign[0].enterpriseInfoId = response.result.enterpriseIds
-                  this.formLabelAlign[0].createBy = store.getters.userInfo.username
-                  this.formLabelAlign[0].name = ''
-                  this.formLabelAlign[0].post = ''
-                  this.formLabelAlign[0].phone = ''
-                  this.formLabelAlign[0].createTime = this.getNowFormatDate()
+        //     this.axios({
+        //       method: 'get',
+        //       url: '/app/staff/list',
+        //       headers: {},
+        //       params: { enterpriseInfoId: response.result.enterpriseIds, jobfairid: record.id },
+        //     })
+        //       .then((response) => {
+        //         console.log('参会人员信息', response.result.records.length)
+        //         console.log('参会人员信息', response.result.records)
+        //         if (response.result.records.length < 1) {
+        //           this.formLabelAlign[0].jobFairId = this.jobfairinfo.id
+        //           this.formLabelAlign[0].enterpriseInfoId = response.result.enterpriseIds
+        //           this.formLabelAlign[0].createBy = store.getters.userInfo.username
+        //           this.formLabelAlign[0].name = ''
+        //           this.formLabelAlign[0].post = ''
+        //           this.formLabelAlign[0].phone = ''
+        //           this.formLabelAlign[0].createTime = this.getNowFormatDate()
 
-                  this.formLabelAlign[1].jobFairId = this.jobfairinfo.id
-                  this.formLabelAlign[1].enterpriseInfoId = response.result.enterpriseIds
-                  this.formLabelAlign[1].createBy = store.getters.userInfo.username
-                  this.formLabelAlign[1].name = ''
-                  this.formLabelAlign[1].post = ''
-                  this.formLabelAlign[1].phone = ''
-                  this.formLabelAlign[1].createTime = this.getNowFormatDate()
-                  this.bmandtbryvisible = true;
-                  // this.$message.warning('该企业没有参会人员！')
-                  // return
-                }else if(response.result.records.length == 1){
-                  this.formLabelAlign[0].jobFairId = response.result.records[0].jobFairId
-                  this.formLabelAlign[0].enterpriseInfoId = response.result.records[0].enterpriseInfoId
-                  this.formLabelAlign[0].createBy = response.result.records[0].createBy
-                  this.formLabelAlign[0].name = response.result.records[0].name
-                  this.formLabelAlign[0].post = response.result.records[0].post
-                  this.formLabelAlign[0].phone = response.result.records[0].phone
-                  this.formLabelAlign[0].createTime = response.result.records[0].createTime
-                  this.bmandtbryvisible = true;
-                }
-                 else {
-                  this.formLabelAlign = response.result.records
-                  this.bmandtbryvisible = true;
-                }
+        //           this.formLabelAlign[1].jobFairId = this.jobfairinfo.id
+        //           this.formLabelAlign[1].enterpriseInfoId = response.result.enterpriseIds
+        //           this.formLabelAlign[1].createBy = store.getters.userInfo.username
+        //           this.formLabelAlign[1].name = ''
+        //           this.formLabelAlign[1].post = ''
+        //           this.formLabelAlign[1].phone = ''
+        //           this.formLabelAlign[1].createTime = this.getNowFormatDate()
+        //           this.bmandtbryvisible = true;
+        //           // this.$message.warning('该企业没有参会人员！')
+        //           // return
+        //         } else if (response.result.records.length == 1) {
+        //           this.formLabelAlign[0].jobFairId = response.result.records[0].jobFairId
+        //           this.formLabelAlign[0].enterpriseInfoId = response.result.records[0].enterpriseInfoId
+        //           this.formLabelAlign[0].createBy = response.result.records[0].createBy
+        //           this.formLabelAlign[0].name = response.result.records[0].name
+        //           this.formLabelAlign[0].post = response.result.records[0].post
+        //           this.formLabelAlign[0].phone = response.result.records[0].phone
+        //           this.formLabelAlign[0].createTime = response.result.records[0].createTime
+        //           this.bmandtbryvisible = true;
+        //         }
+        //         else {
+        //           this.formLabelAlign = response.result.records
+        //           this.bmandtbryvisible = true;
+        //         }
 
-              })
+        //       })
 
-          })
-          .catch(function (error) {
-            // this.$message.error(res.message || '上传失败');
-            // data.onError() // 返回报错
-            console.log(error)
-          })
+        //   })
+        //   .catch(function (error) {
+        //     // this.$message.error(res.message || '上传失败');
+        //     // data.onError() // 返回报错
+        //     console.log(error)
+        //   })
       },
       // 获取时间
       getNowFormatDate() {
@@ -930,9 +957,11 @@
     float: left;
     margin-top: -5%; */
   }
-  .el-alert--info.is-light{
-    background-color:#f9f9fc;
+
+  .el-alert--info.is-light {
+    background-color: #f9f9fc;
   }
+
   .el-alert--info.is-light {
     color: black;
   }

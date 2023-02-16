@@ -117,6 +117,7 @@ const jobenablecount = (params)=>getAction("/hall/jobfair/list?enable=1",params)
 const jobenable = (params)=>getAction("/hall/jobfair/enable",params);//启用-招聘会
 const setuphall = (params)=>getAction("/hall/jobfair/setuphall",params);//设置招聘大厅()
 //展位
+const getqueryBoothInfoListbyenable = (params)=>getAction("/hall/booth/queryBoothInfoListbyenable",params);// 《查看已占展位》
 const getBoothList = (params)=>getAction("/hall/booth/list",params);// 《展位查询》
 const togetBoothList = (params)=>getAction("/hall/booth/list?pageSize=100",params);// 《展位查询》
 const getEditById=(params)=>postAction("/hall/booth/editById",params);
@@ -125,6 +126,7 @@ const openadd=(params)=>postAction("/hall/booth/add",params);
 const chooseboothadd=(params)=>postAction("/hall/booth/choosebooth",params);//企业选择展位
 const closeact = (params)=>getAction("/hall/booth/close",params);// 《不公开》
 const addbooth=(params)=>postAction("/hall/booth/add",params);
+const cancelbooth=(params)=>getAction("/hall/booth/cancelbooth",params);
 //（企业）编辑岗位信息
 const getentpostjobfairList = (params)=>getAction("/hall/jobfairposition/queryexaminejob",params);//岗位查询
 //简历查询
@@ -292,6 +294,8 @@ export {
   getboothobj,
   openadd,
   chooseboothadd,
+  getqueryBoothInfoListbyenable,
+  cancelbooth,
   closeact,
   addbooth,
   addenterprise,

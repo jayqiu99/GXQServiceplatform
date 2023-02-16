@@ -113,7 +113,8 @@
           </a-col>
           <a-col :span="1">
             <a-form-item label="" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <el-button type="primary" size="mini"  style="margin-left: -160%;" @click="gdmapclick" icon="el-icon-location-information" circle></el-button>
+              <el-button type="primary" size="mini" style="margin-left: -160%;" @click="gdmapclick"
+                icon="el-icon-location-information" circle></el-button>
             </a-form-item>
           </a-col>
         </a-row>
@@ -222,7 +223,7 @@
         </a-row>
 
         <!-- <a-form-item label="用工备案表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <el-upload class="upload-demo" action="http://123.57.236.82:8080/zqhr/base/upload" :data="{systype:biaz}"
+          <el-upload class="upload-demo" action="https://dwrlzy.jiahangit.com.cn/zqhr/base/upload" :data="{systype:biaz}"
             :on-success="handleExcelSuccess" :on-error="handleExcelError" :file-list="ExcelfileList">
             
           </el-upload>
@@ -237,9 +238,9 @@
       <a-button style="margin-right: 0.8rem" @click="handleCancel">关闭</a-button>
       <a-button @click="handleSubmit" type="primary" :loading="confirmLoading">保存</a-button>
     </div>
-    <gd-map ref="mapForm" @ok="modalFormOk"></gd-map>
+    <gd-map ref="mapForm" @updateLocation="updateLocation" @ok="modalFormOk"></gd-map>
   </a-drawer>
-  
+
 </template>
 
 <script>
@@ -421,6 +422,7 @@
         areaId: '', //区域
         areaname: '', //区域
         areassq: [], //区域
+        addressInfo: {}
       }
     },
     created() {
@@ -441,8 +443,66 @@
       this.getscaleList()
     },
     methods: {
-      gdmapclick(){
-        this.$refs.mapForm.edit()
+      updateLocation(Addr) {
+        console.log('位置信息：', Addr)
+        this.addressInfo = Addr;
+        this.exaupdata.address = Addr.orgAddr;
+
+        this.model = Object.assign({}, this.exaupdata)
+
+        this.$nextTick(() => {
+          this.form.setFieldsValue(
+            pick(
+              this.model,
+              'enterpriseName',
+              'trade',
+              'scale',
+              'address',
+              'area',
+              'synopsis',
+              'companyPrincipal',
+              'idcard',
+              'phone',
+              'creditCode',
+              'nature',
+              'email',
+              'isuploadpictures',
+              'isuploadvideo'
+            )
+          )
+        })
+      },
+      /** 确认地图地址 */
+      confirmMapAddress(addressInfo) {
+        this.addressInfo = addressInfo;
+        this.exaupdata.address = addressInfo.address;
+        console.log("更改完地址后", addressInfo);
+        this.model = Object.assign({}, this.exaupdata)
+        console.log("更改完地址后对象", this.model);
+        this.$nextTick(() => {
+          this.form.setFieldsValue(
+            pick(
+              this.model,
+              'enterpriseName',
+              'trade',
+              'scale',
+              'address',
+              'area',
+              'synopsis',
+              'companyPrincipal',
+              'idcard',
+              'phone',
+              'creditCode',
+              'nature',
+              'email',
+              'isuploadpictures',
+              'isuploadvideo'
+            )
+          )
+        })
+      },
+      gdmapclick() {
+        this.$refs.mapForm.show()
       },
       areaonChange(res, op) {
         console.log('区域级联', op)
@@ -487,7 +547,7 @@
         console.log('文件上传', logimageurl)
         setTimeout(() => {
           this.fileList = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.fileList.url = httpurla + logimageurl
           this.upimgstrurl = logimageurl
           console.log('图1', this.fileList)
@@ -497,7 +557,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.wtsimglist = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.wtsimglist.url = httpurla + logimageurl
           this.wtsimgyrl = logimageurl
           console.log('图2', this.wtsimglist)
@@ -507,7 +567,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.babimglist = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.babimglist.url = httpurla + logimageurl
           this.babimgurl = logimageurl
           console.log('图2', this.babimglist)
@@ -517,7 +577,7 @@
         console.log('文件上传2', logimageurl)
         setTimeout(() => {
           this.businessList = {}
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.businessList.url = httpurla + logimageurl
           this.updataimgstrurl = logimageurl
           console.log('图2', this.businessList)
@@ -694,7 +754,7 @@
           this.imgstrurl = record.logoAddress
           console.log('截取前路径', this.imgstrurl)
 
-          this.imgstrurl = this.imgstrurl.replace('http://123.57.236.82:8080/zqhr', '')
+          this.imgstrurl = this.imgstrurl.replace('https://dwrlzy.jiahangit.com.cn/zqhr', '')
           // this.imgstrurl = this.imgstrurl.slice(34)
           // console.log('截取后路径', this.imgstrurl)
           console.log('替换后路径', this.newimgstrurl)
@@ -702,7 +762,7 @@
           this.wtsimgyrl = record.poweraTtorneyAddress
           this.babimgurl = record.employmentFilingAddress
           // this.ExcelfileList.name = record.enterpriseName + "备案表"
-          var httpurla = 'http://123.57.236.82:8080/zqhr'
+          var httpurla = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           this.fileList.url = record.logoAddress
           this.fileList.thumbUrl = record.logoAddress
           this.businessList.url = httpurla + record.businessLicenseAddress
@@ -929,12 +989,12 @@
                   }
                   console.log("企业图片", this.upimgstrurl);
                   if (this.logoistrue == false) {
-                    var imgstr = this.logoimgstr.replace('http://123.57.236.82:8080/zqhr', '')
+                    var imgstr = this.logoimgstr.replace('https://dwrlzy.jiahangit.com.cn/zqhr', '')
                     formData.logoAddress = imgstr
                     console.log("进来falas", formData.logoAddress);
                   } else {
                     if (this.upimgstrurl) {
-                      var imgstr = this.upimgstrurl.replace('http://123.57.236.82:8080/zqhr', '')
+                      var imgstr = this.upimgstrurl.replace('https://dwrlzy.jiahangit.com.cn/zqhr', '')
                       formData.logoAddress = this.upimgstrurl
                     } else {
                       formData.logoAddress = this.upimgstrurl
@@ -951,7 +1011,10 @@
                   formData.area = this.areaname
                   formData.bdmAreaInfoId = this.areaId
                 }
-
+                if (this.addressInfo.lon != null) {
+                  formData.longitude = this.addressInfo.lon;
+                  formData.latitude = this.addressInfo.lat;
+                }
                 // console.log('Logo地址', this.logoimgstr)
                 console.log('修改结果对象', formData)
                 this.axios({

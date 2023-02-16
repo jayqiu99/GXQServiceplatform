@@ -9,7 +9,7 @@
             <a-divider orientation="left">企业环境图片</a-divider>
           </p>
           <el-upload
-            action="http://123.57.236.82:8080/zqhr/base/upload"
+            action="https://dwrlzy.jiahangit.com.cn/zqhr/base/upload"
             :data="{systype:biaz}"
             list-type="picture-card"
             :file-list="elimgfileList"
@@ -391,7 +391,7 @@
             this.dataSource[0].fileDetails = response.result.records
             for (let i = 0; i < response.result.records.length; i++) {
               this.dataSource[0].fileDetails[i].imgUrl =
-                'http://123.57.236.82:8080/zqhr' + response.result.records[i].multimediaAddress
+                'https://dwrlzy.jiahangit.com.cn/zqhr' + response.result.records[i].multimediaAddress
             }
             let imgList = response.result.records
             imgList.forEach(item => {
@@ -446,7 +446,7 @@
           .then(response => {
             console.log('视频上传', response.result.records.length)
             if (response.result.records.length > 0) {
-              this.videoForm.showVideoPath = 'http://123.57.236.82:8080/zqhr' + response.result.records[0].multimediaAddress
+              this.videoForm.showVideoPath = 'https://dwrlzy.jiahangit.com.cn/zqhr' + response.result.records[0].multimediaAddress
             }
           })
           .catch(function(error) {

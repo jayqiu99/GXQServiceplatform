@@ -301,7 +301,7 @@ export default {
           let params = this.getQueryParams() //查询条件
           params.id = response.result.enterpriseIds
           console.log('table参数', params)
-          var logoAddressUrl = 'http://123.57.236.82:8080/zqhr'
+          var logoAddressUrl = 'https://dwrlzy.jiahangit.com.cn/zqhr'
           entapprovedList(params).then((res) => {
             // res.result.records[0].examinestate=2
             // console.log("企业信息",res.result.records);

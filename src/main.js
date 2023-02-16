@@ -45,25 +45,28 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import VueAMap from 'vue-amap';
 // // 初始化vue-amap
-// VueAMap.initAMapApiLoader({
-// 	// 高德的key
-// 	key: 'b734d9f3999e950cf4b3047bfc301cea',
-// 	// 插件集合
-// 	plugin: [
-// 		'AMap.CircleEditor',// 圆形编辑器插件
-// 		"AMap.Geolocation", // 定位控件，用来获取和展示用户主机所在的经纬度位置
-// 		"AMap.Geocoder", // 地理编码与逆地理编码服务，用于地址描述与坐标间的相互转换
-// 		"AMap.Autocomplete",
-// 		"AMap.PlaceSearch",
-// 		"AMap.CitySearch",
-// 	],
-// 	// 高德 sdk 版本，默认为 1.4.4
-// 	v: '1.4.4'
-// });
-// //高德的安全密钥
-// window._AMapSecurityConfig = {
-// 	securityJsCode:'bfb0f7420d4b027276711fb0bddd696c',
-// }
+
+// import VueAMap from 'vue-amap'
+Vue.use(VueAMap);
+// 初始化vue-amap
+VueAMap.initAMapApiLoader({
+	key: 'b734d9f3999e950cf4b3047bfc301cea',// 高德的key
+	// 插件集合
+	plugin: [
+		'AMap.CircleEditor',// 圆形编辑器插件
+		"AMap.Geolocation", // 定位控件，用来获取和展示用户主机所在的经纬度位置
+		"AMap.Geocoder", // 地理编码与逆地理编码服务，用于地址描述与坐标间的相互转换
+		"AMap.Autocomplete",
+		"AMap.PlaceSearch",
+		"AMap.CitySearch",
+	],
+	// 高德 sdk 版本，默认为 1.4.4
+	v: '1.4.4'
+});
+//高德的安全密钥
+window._AMapSecurityConfig = {
+	securityJsCode:'bfb0f7420d4b027276711fb0bddd696c',
+}
 Vue.use(Element)
 Vue.config.productionTip = false
 Vue.use(Storage, config.storageOptions)
