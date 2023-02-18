@@ -1401,7 +1401,7 @@
                             console.log("企业选择展位id", this.boothnum);
                         })
                         .catch(function (error) {
-                            console.log(error)
+                            console.log("1",error)
                         })
 
                 this.enterpriseInfoobj = record;

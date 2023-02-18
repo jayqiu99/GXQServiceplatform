@@ -924,6 +924,7 @@ export default {
                         console.log("已选展位", this.entinfo);
                         getboothobj({ enterpriseinfoid: this.entinfo.enterpriseIds, jobfairid: this.recordData.id }).then((res) => {
                             if (res.success) {
+                                this.$emit('nullInfo',true)
                                 // console.log("已选展位",res.result);
                                 if (res.result.id == undefined) {
 
@@ -1001,6 +1002,7 @@ export default {
                                 // this.$message.success(res.message)
                             } else {
                                 this.$message.warn(res.message)
+                                this.$emit('nullInfo',false)
                             }
                         })
                     })

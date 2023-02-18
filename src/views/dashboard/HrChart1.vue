@@ -114,11 +114,11 @@
         <el-alert title="" :closable="false" center style="width: 10%;float:left;height: 95px;">
           <div>
             <router-link to='/jobfair/entjobfairbm'>
-              <el-button v-if="bMdatesource[i].entrytimeOverdue != '已过期' && bMdatesource[i].examinestate !='已报名'"
+              <el-button v-if="bMdatesource[i].entrytimeOverdue != '已过期' && bMdatesource[i].examinestate !='已报名(审核通过)'&&bMdatesource[i].examinestate !='已报名(待审核)'"
                 class="butclass" type="primary" @click="clickalerttwo(bMdatesource[i])">立即报名</el-button>
             </router-link>
 
-            <el-button v-if="bMdatesource[i].entrytimeOverdue == '已过期'" type="info" plain disabled>报名已截止</el-button>
+            <!-- <el-button v-if="bMdatesource[i].entrytimeOverdue == '已过期'" type="info" plain disabled>报名已截止</el-button> -->
           </div>
 
         </el-alert>
@@ -202,7 +202,7 @@
             <span>招聘人员1</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
-          <div class="text item">
+          <div class="item">
             <el-form :label-position="labelPosition" label-width="80px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[0].name"></el-input>
@@ -213,7 +213,7 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[0].phone"></el-input>
               </el-form-item>
-              <el-form-item label="是否愿意出境" prop="oncamera">
+              <el-form-item label="是否愿意出镜" prop="oncamera">
                 <el-radio v-model="formLabelAlign[0].oncamera" :label="0">否</el-radio>
                 <el-radio v-model="formLabelAlign[0].oncamera" :label="1">是</el-radio>
               </el-form-item>
@@ -226,7 +226,7 @@
             <span>招聘人员2</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
-          <div class="text item">
+          <div class="item">
             <el-form :label-position="labelPosition" label-width="80px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[1].name"></el-input>
@@ -237,7 +237,7 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[1].phone"></el-input>
               </el-form-item>
-              <el-form-item label="是否愿意出境" prop="oncamera">
+              <el-form-item label="是否愿意出镜" prop="oncamera">
                 <el-radio v-model="formLabelAlign[1].oncamera" :label="0">否</el-radio>
                 <el-radio v-model="formLabelAlign[1].oncamera" :label="1">是</el-radio>
               </el-form-item>
@@ -623,8 +623,12 @@
                       // }
                       if (res.result.records[i].examinestate == -2) {
                         res.result.records[i].examinestate = '未报名'
-                      } else {
-                        res.result.records[i].examinestate = '已报名'
+                      } else if(res.result.records[i].examinestate==1){
+                        res.result.records[i].examinestate = '已报名(审核通过)'
+                      }else if(res.result.records[i].examinestate==-1){
+                        res.result.records[i].examinestate = '报名审核不通过'
+                      }else if(res.result.records[i].examinestate==0){
+                        res.result.records[i].examinestate = '已报名(待审核)'
                       }
 
                       if (res.result.records[i].entrytimeStart != null) {

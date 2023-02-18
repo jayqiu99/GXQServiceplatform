@@ -137,15 +137,15 @@
                 <span v-if="ispd == 1">{{ boothtext.areassq }}</span>
               </detail-list-item>
 
-              <detail-list-item term="工作详址" style="width: 100%; margin-top: 2%">
-                <!-- <a-textarea
+               <!--<detail-list-item term="工作详址" style="width: 100%; margin-top: 2%">
+                <a-textarea
                   v-if="ispd == 0"
                   placeholder="请输入工作地址"
                   v-decorator.trim="['jobAddress', validatorRules.jobAddress]"
-                /> -->
+                /> 
                 <a-input style="width: 50%" placeholder v-model="boothtext.jobAddress" v-if="ispd == 0"></a-input>
                 <span v-if="ispd == 1">{{ boothtext.jobAddress }}</span>
-              </detail-list-item>
+              </detail-list-item>-->
 
               <detail-list-item term="性别要求" style="width: 100%; margin-top: 2%">
                 <a-select style="width: 50%" v-if="ispd == 0" v-model="boothtext.genderRequirement">

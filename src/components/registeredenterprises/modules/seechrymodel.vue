@@ -7,7 +7,7 @@
           <span>招聘人员1</span>
           <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
         </div>
-        <div class="text item">
+        <div class="item">
           <el-form :label-position="labelPosition" label-width="120px">
             <el-form-item label="名称">
               <a-input disabled v-model="formLabelAlign[0].name"></a-input>
@@ -18,7 +18,7 @@
             <el-form-item label="联系电话">
               <a-input disabled v-model="formLabelAlign[0].phone"></a-input>
             </el-form-item>
-            <el-form-item label="是否愿意出境" prop="oncamera">
+            <el-form-item label="是否愿意出镜" prop="oncamera">
               <el-radio v-model="formLabelAlign[0].oncamera" :label="0">否</el-radio>
               <el-radio v-model="formLabelAlign[0].oncamera" :label="1">是</el-radio>
             </el-form-item>
@@ -32,7 +32,7 @@
           <span>招聘人员2</span>
           <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
         </div>
-        <div class="text item">
+        <div class="item">
           <el-form :label-position="labelPosition" label-width="120px">
             <el-form-item label="名称">
               <a-input disabled v-model="formLabelAlign[1].name"></a-input>
@@ -43,7 +43,7 @@
             <el-form-item label="联系电话">
               <a-input disabled v-model="formLabelAlign[1].phone"></a-input>
             </el-form-item>
-            <el-form-item label="是否愿意出境" prop="oncamera">
+            <el-form-item label="是否愿意出镜" prop="oncamera">
               <el-radio v-model="formLabelAlign[1].oncamera" :label="0">否</el-radio>
               <el-radio v-model="formLabelAlign[1].oncamera" :label="1">是</el-radio>
             </el-form-item>

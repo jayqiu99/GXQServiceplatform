@@ -1,7 +1,7 @@
 <template>
 <!-- <div style="float:right;display:flex;width:80%"> -->
   <div class="user-wrapper" :class="theme" >
-      <div class="mentTitle"><b>高新区人力资源与企业信息服务平台</b></div> 
+      <div class="mentTitle"><b>肇庆高薪直聘信息服务平台</b></div> 
       <!-- <div class="mentTitle"><img src="../../../public/images/head.png" alt=""></div>  -->
     <!-- update_begin author:zhaoxin date:20191129 for: 做头部菜单栏导航 -->
     <!-- update-begin author:sunjianlei date:20191@20 for: 解决全局样式冲突的问题 -->

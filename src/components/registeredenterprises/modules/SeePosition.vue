@@ -77,9 +77,9 @@
               <detail-list-item term="工作区域" style="width: 100%; margin-top: 2%">{{
                 boothtext.area
               }}</detail-list-item>
-              <detail-list-item term="工作详址" style="width: 100%; margin-top: 2%">{{
+              <!-- <detail-list-item term="工作详址" style="width: 100%; margin-top: 2%">{{
                 boothtext.address
-              }}</detail-list-item>
+              }}</detail-list-item> -->
               <detail-list-item term="特色服务" style="width: 100%; margin-top: 2%">{{
                 boothtext.special
               }}</detail-list-item>

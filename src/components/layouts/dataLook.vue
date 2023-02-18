@@ -1,28 +1,8 @@
 <template>
-  <a-modal :title="title" :width="600" :visible="visible" @cancel="handleCancel">
+  <a-modal :title="title" :width="600" :visible="visible" @cancel="handleCancel" style="overflow: auto;">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <div style="width:100%">
-          <div style="display: inline-block; margin-left: 13%">
-            <div style="font-size: 15px;text-align: center;">关注抖音号</div>
-            <div style="font-size: 15px;text-align: center;">（请用抖音APP扫码）</div>
-            <img style="width: 150px" src="~@/assets/login/dy.jpg" />
-          </div>
-          <div style="display: inline-block; margin-left: 20%">
-            <div style="font-size: 15px;text-align: center;">关注微信视频号</div>
-            <div style="font-size: 15px;text-align: center;">（请用微信APP扫码）</div>
-            <img style="width: 150px" src="~@/assets/login/wx.png" />
-          </div>
-          <div style="widht: 100%; margin-top: 2%; color: red; font-size: 15px">
-            （注册前扫码关注“广东加薪发布”抖音号和微信视频号，以便参加直播招聘会。）
-          </div>
-        </div>
-        <!-- <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="Ipad编号">
-          <a-input
-            placeholder="请输入Ipad编号"
-            v-decorator.trim="[ 'ipadCode', validatorRules.ipadCode]"
-          />
-        </a-form-item> -->
+       <div v-html="noticeContent" class="ql-editor" ></div>
       </a-form>
     </a-spin>
 
@@ -33,12 +13,16 @@
 </template>
 
 <script>
+import { getAction } from '../../api/manage'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 export default {
   name: 'IpadRegisterAddModal',
   data() {
     return {
       value: 1,
-      title: '关注讯息',
+      title: '通知公告',
       visible: false,
       model: {},
       labelCol: {
@@ -50,9 +34,12 @@ export default {
         sm: { span: 16 },
       },
       confirmLoading: false,
+      noticeContent:null
     }
   },
-  created() {},
+  created() {
+    this.getNotice()
+  },
   methods: {
     edit(record) {
       this.visible = true
@@ -60,6 +47,16 @@ export default {
     // 关闭
     handleCancel() {
       this.close()
+    },
+    getNotice(){
+      var _this=this;
+      getAction('/app/publicnotice/getpublicnotice').then(res=>{
+        if(res.success){
+          if(res.result!=null){
+          _this.visible=true
+          _this.noticeContent=res.result.noticeContent
+          }}
+      })
     },
     close() {
       this.$emit('close')

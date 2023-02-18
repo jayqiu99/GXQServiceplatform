@@ -194,7 +194,7 @@
             <span>招聘人员1</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
-          <div class="text item">
+          <div>
             <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[0].name"></el-input>
@@ -205,17 +205,17 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[0].phone"></el-input>
               </el-form-item>
-              <el-form-item label="是否愿意出境" prop="oncamera">
+              <el-form-item label="是否愿意出镜" prop="oncamera">
                 <el-radio v-model="formLabelAlign[0].oncamera" :label="0">否</el-radio>
                 <el-radio v-model="formLabelAlign[0].oncamera" :label="1">是</el-radio>
               </el-form-item>
-              <el-form-item  required v-if="formLabelAlign[0].oncamera == 1">
+              <el-form-item required v-if="formLabelAlign[0].oncamera == 1">
                 <span slot="label">
-                  <span style="font-weight:700;color:red">出境注意事项</span>
+                  <span style="font-weight: 700; color: red">出镜注意事项</span>
                 </span>
                 <span style="color: black; font-weight: 700"
-                  ><p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
-                 <p> （2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  ><p>（1）确定愿意出镜的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                  <p>（2）出镜时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
                   <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
                 >
               </el-form-item>
@@ -223,12 +223,12 @@
           </div>
         </el-card>
         <!-- 2 -->
-        <el-card class="box-card" >
+        <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>招聘人员2</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
-          <div class="text item">
+          <div class="item">
             <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[1].name"></el-input>
@@ -239,17 +239,17 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[1].phone"></el-input>
               </el-form-item>
-              <el-form-item label="是否愿意出境" prop="oncamera">
+              <el-form-item label="是否愿意出镜" prop="oncamera">
                 <el-radio v-model="formLabelAlign[1].oncamera" :label="0">否</el-radio>
                 <el-radio v-model="formLabelAlign[1].oncamera" :label="1">是</el-radio>
               </el-form-item>
-              <el-form-item  required v-if="formLabelAlign[1].oncamera == 1">
+              <el-form-item required v-if="formLabelAlign[1].oncamera == 1">
                 <span slot="label">
-                  <span style="font-weight:700;color:red">出境注意事项</span>
+                  <span style="font-weight: 700; color: red">出镜注意事项</span>
                 </span>
                 <span style="color: black; font-weight: 700">
-                  <p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
-                  <p>（2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  <p>（1）确定愿意出镜的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                  <p>（2）出镜时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
                   <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
                 >
               </el-form-item>
@@ -267,12 +267,12 @@
     <a-drawer :title="title" :width="600" @close="bmtjryclose" :visible="bmandtbryvisible" @cancel="bmtjryhandleCancel">
       <a-spin :spinning="confirmLoading">
         <!-- 1 -->
-        <el-card class="box-card" >
+        <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>招聘人员1</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
-          <div class="text item">
+          <div class="item">
             <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[0].name"></el-input>
@@ -283,17 +283,17 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[0].phone"></el-input>
               </el-form-item>
-              <el-form-item label="是否愿意出境" prop="oncamera">
+              <el-form-item label="是否愿意出镜" prop="oncamera">
                 <el-radio v-model="formLabelAlign[0].oncamera" :label="0">否</el-radio>
                 <el-radio v-model="formLabelAlign[0].oncamera" :label="1">是</el-radio>
               </el-form-item>
-             <el-form-item  required v-if="formLabelAlign[0].oncamera == 1">
+              <el-form-item required v-if="formLabelAlign[0].oncamera == 1">
                 <span slot="label">
-                  <span style="font-weight:700;color:red">出境注意事项</span>
+                  <span style="font-weight: 700; color: red">出镜注意事项</span>
                 </span>
                 <span style="color: black; font-weight: 700">
-                  <p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
-                  <p>（2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  <p>（1）确定愿意出镜的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                  <p>（2）出镜时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
                   <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
                 >
               </el-form-item>
@@ -306,7 +306,7 @@
             <span>招聘人员2</span>
             <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
-          <div class="text item">
+          <div class="item">
             <el-form :label-position="labelPosition" label-width="120px">
               <el-form-item label="名称">
                 <el-input v-model="formLabelAlign[1].name"></el-input>
@@ -317,17 +317,17 @@
               <el-form-item label="联系电话" prop="mobile">
                 <el-input v-model="formLabelAlign[1].phone"></el-input>
               </el-form-item>
-              <el-form-item label="是否愿意出境" prop="oncamera">
+              <el-form-item label="是否愿意出镜" prop="oncamera">
                 <el-radio v-model="formLabelAlign[1].oncamera" :label="0">否</el-radio>
                 <el-radio v-model="formLabelAlign[1].oncamera" :label="1">是</el-radio>
               </el-form-item>
-              <el-form-item  required v-if="formLabelAlign[1].oncamera == 1">
+              <el-form-item required v-if="formLabelAlign[1].oncamera == 1">
                 <span slot="label">
-                  <span style="font-weight:700;color:red">出境注意事项</span>
+                  <span style="font-weight: 700; color: red">出镜注意事项</span>
                 </span>
                 <span style="color: black; font-weight: 700">
-                  <p>（1）确定愿意出境的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
-                  <p>（2）出境时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
+                  <p>（1）确定愿意出镜的企业HR提前做好准备，并必须参加，否则会影响线上直播的正常开展。</p>
+                  <p>（2）出镜时间在3分钟之内，企业HR准备好企业介绍、企业福利待遇、招聘岗位的要求等有关招聘的信息。</p>
                   <p>（3）尽量不要在抖音直播时提及微信或其他平台、电话号码等，可用“某信”等方式介绍。</p></span
                 >
               </el-form-item>
@@ -369,7 +369,7 @@
       :visible="bjzwvisible"
       style="height: 100%; overflow: auto; padding-bottom: 53px"
     >
-      <booth-page :key="boothkey" :recordData="recordData" />
+      <booth-page @nullInfo="nullInfo" :key="boothkey" :recordData="recordData" />
       <div class="drawer-bootom-button">
         <!-- <a-popconfirm  title="确定提交审核吗?"
             @confirm="() => Submitforreview(record)">
@@ -431,13 +431,13 @@ export default {
           name: '',
           post: '',
           phone: '',
-          oncamera: 0,
+          oncamera: '',
         },
         {
           name: '',
           post: '',
           phone: '',
-          oncamera: 0,
+          oncamera: '',
         },
       ],
       title: '添加招聘人员',
@@ -561,6 +561,7 @@ export default {
         jobfairdata: '/hall/jobfair/list?pageSize=1000', //?isexisting=0
         importExcelUrl: 'sys/user/importExcel',
       },
+      istrue: '',
     }
   },
   computed: {
@@ -573,8 +574,15 @@ export default {
   },
   methods: {
     handleSubmit() {},
+    nullInfo(istrue) {
+      this.istrue = istrue
+    },
     Submitforreview() {
       console.log(this.JumpObj, this.jobfairinfo)
+      if (!this.istrue) {
+        this.$message.warning('暂未选择展位，请选择展位再提交')
+        return
+      }
       if (this.jobfairinfo.buttonType == 1) {
         this.PosthandleEdit(this.jobfairinfo)
         this.bjxzhandleCancel()
@@ -617,6 +625,20 @@ export default {
     EditParticipants(record) {
       console.log('招聘人员', record)
       this.jobfairinfo = record
+      this.formLabelAlign= [
+        {
+          name: '',
+          post: '',
+          phone: '',
+          oncamera: '',
+        },
+        {
+          name: '',
+          post: '',
+          phone: '',
+          oncamera: '',
+        },
+      ]
       var departn = localStorage.getItem('departId')
       this.axios({
         method: 'get',
@@ -633,7 +655,7 @@ export default {
             headers: {},
             params: { enterpriseInfoId: response.result.enterpriseIds, jobfairid: record.id },
           }).then((response) => {
-            console.log('招聘人员信息', response.result.records.length)
+            console.log('招聘人员信息', response.result.records)
             if (response.result.records.length < 1) {
               this.formLabelAlign[0].jobFairId = this.jobfairinfo.id
               this.formLabelAlign[0].enterpriseInfoId = response.result.enterpriseIds
@@ -641,7 +663,7 @@ export default {
               this.formLabelAlign[0].name = ''
               this.formLabelAlign[0].post = ''
               this.formLabelAlign[0].phone = ''
-              this.formLabelAlign[0].oncamera = 0
+              this.formLabelAlign[0].oncamera = ''
               this.formLabelAlign[0].createTime = this.getNowFormatDate()
 
               this.formLabelAlign[1].jobFairId = this.jobfairinfo.id
@@ -650,7 +672,7 @@ export default {
               this.formLabelAlign[1].name = ''
               this.formLabelAlign[1].post = ''
               this.formLabelAlign[1].phone = ''
-              this.formLabelAlign[1].oncamera = 0
+              this.formLabelAlign[1].oncamera = ''
               this.formLabelAlign[1].createTime = this.getNowFormatDate()
               this.tbryvisible = true
               // this.$message.warning('该企业没有招聘人员！')
@@ -662,7 +684,7 @@ export default {
               this.formLabelAlign[0].name = response.result.records[0].name
               this.formLabelAlign[0].post = response.result.records[0].post
               this.formLabelAlign[0].phone = response.result.records[0].phone
-              this.formLabelAlign[0].oncamera = response.result.record[0].oncamera
+              this.formLabelAlign[0].oncamera = response.result.records[0].oncamera
               this.formLabelAlign[0].createTime = response.result.records[0].createTime
               this.tbryvisible = true
             } else {
@@ -710,6 +732,11 @@ export default {
               return
             }
           }
+          if (this.formLabelAlign[0].oncamera === '') {
+            this.$message.warning('招聘人员1请选择是否愿意出镜')
+            return
+          }
+
           if (this.formLabelAlign[1].phone != '') {
             if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[1].phone)) {
               this.$message.warning('招聘人员2联系电话不正确！')
@@ -721,6 +748,10 @@ export default {
             // console.log('参会报名信息1111',  this.formLabelAlign[1])
             this.addchpo[0] = this.formLabelAlign[0]
           } else {
+            if (this.formLabelAlign[1].oncamera === '') {
+              this.$message.warning('招聘人员2请选择是否愿意出镜')
+              return
+            }
             this.addchpo = this.formLabelAlign
           }
           // this.axios({
@@ -810,11 +841,24 @@ export default {
               return
             }
           }
+          if (this.formLabelAlign[0].oncamera === '') {
+            this.$message.warning('招聘人员1请选择是否愿意出镜')
+            return
+          }
           if (this.formLabelAlign[1].phone != '') {
             if (!/^1[3456789]\d{9}$/.test(this.formLabelAlign[1].phone)) {
               this.$message.warning('招聘人员2联系电话不正确！')
               return
             }
+          }
+          if (this.formLabelAlign[1].name == '') {
+            this.addchpo[0] = this.formLabelAlign[0]
+          } else {
+            if (this.formLabelAlign[1].oncamera === '') {
+              this.$message.warning('招聘人员2请选择是否愿意出镜')
+              return
+            }
+            this.addchpo = this.formLabelAlign
           }
           // this.$message.success(response.message)
           this.axios({
@@ -822,7 +866,7 @@ export default {
             url: '/app/staff/add',
             headers: {},
             params: {},
-            data: this.formLabelAlign,
+            data: this.addchpo,
           })
             .then((response) => {
               if (response.success) {
@@ -953,6 +997,20 @@ export default {
       console.log('招聘会信息', record)
       this.jobfairinfo = record
       var departn = localStorage.getItem('departId')
+      this.formLabelAlign= [
+        {
+          name: '',
+          post: '',
+          phone: '',
+          oncamera: '',
+        },
+        {
+          name: '',
+          post: '',
+          phone: '',
+          oncamera: '',
+        },
+      ]
       this.axios({
         method: 'get',
         url: '/sys/getenterprisebyuser',
@@ -976,7 +1034,7 @@ export default {
               this.formLabelAlign[0].name = ''
               this.formLabelAlign[0].post = ''
               this.formLabelAlign[0].phone = ''
-              this.formLabelAlign[0].oncamera = 0
+              this.formLabelAlign[0].oncamera = ''
               this.formLabelAlign[0].createTime = this.getNowFormatDate()
 
               this.formLabelAlign[1].jobFairId = this.jobfairinfo.id
@@ -985,7 +1043,7 @@ export default {
               this.formLabelAlign[1].name = ''
               this.formLabelAlign[1].post = ''
               this.formLabelAlign[1].phone = ''
-              this.formLabelAlign[1].oncamera = 0
+              this.formLabelAlign[1].oncamera = ''
               this.formLabelAlign[1].createTime = this.getNowFormatDate()
               this.bmandtbryvisible = true
               // this.$message.warning('该企业没有招聘人员！')

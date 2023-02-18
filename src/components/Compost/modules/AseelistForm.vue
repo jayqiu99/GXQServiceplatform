@@ -171,11 +171,11 @@
           </a-row>
   
           <a-row :gutter="12">
-            <a-col :span="9">
+            <!-- <a-col :span="9">
               <a-form-item label="工作详址" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <a-textarea placeholder="请输入工作地址" v-decorator.trim="['jobAddress', validatorRules.jobAddress]" />
               </a-form-item>
-            </a-col>
+            </a-col> -->
             <a-col :span="9">
               <a-form-item label="性别要求" :labelCol="labelCol" :wrapperCol="wrapperCol">
                 <a-select

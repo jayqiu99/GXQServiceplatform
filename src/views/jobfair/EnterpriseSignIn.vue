@@ -5,21 +5,21 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="12">
           <a-col :md="7" :sm="8" :push="2">
-            <a-form-item label="招聘会名称" :labelCol="{span: 6}" :wrapperCol="{span: 14, offset: 1}">
+            <a-form-item label="招聘会名称" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
               <a-select v-model="queryParam.jobFairId" @change="getEntryenterpriseList">
-                <a-select-option v-for="d in jobfairdata" :key="d.id" :value="d.id">{{d.name}}</a-select-option>
+                <a-select-option v-for="d in jobfairdata" :key="d.id" :value="d.id">{{ d.name }}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
           <a-col :md="7" :sm="8" :push="3">
-            <a-form-item label="企业名称" :labelCol="{span: 6}" :wrapperCol="{span: 14, offset: 1}">
+            <a-form-item label="企业名称" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
               <a-input placeholder v-model="queryParam.enterpriseInfoName"></a-input>
             </a-form-item>
           </a-col>
         </a-row>
         <a-row :gutter="12">
           <a-col :md="7" :sm="8" :push="2">
-            <a-form-item label="　是否签到" :labelCol="{span: 6}" :wrapperCol="{span: 14, offset: 1}">
+            <a-form-item label="　是否签到" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
               <a-select v-model="queryParam.signStatus">
                 <a-select-option value>请选择</a-select-option>
                 <a-select-option value="0">未签到</a-select-option>
@@ -28,23 +28,15 @@
             </a-form-item>
           </a-col>
           <a-col :md="7" :sm="8" :push="3">
-            <a-form-item label="签到日期" :labelCol="{span: 6}" :wrapperCol="{span: 14, offset: 1}">
-              <a-date-picker
-                style="width:100%"
-                v-model="queryParam.signTime"
-                @change="onChangeDate"
-              />
+            <a-form-item label="签到时间" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
+              <a-date-picker style="width: 100%" v-model="queryParam.signTime" @change="onChangeDate" />
             </a-form-item>
           </a-col>
           <a-col :md="7" :sm="8" :push="3">
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+            <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button
-                type="primary"
-                @click="searchReset"
-                icon="reload"
-                style="margin-left: 8px"
-              >重置</a-button>
+              <a-button type="primary" icon="download" @click="handleExportXls('企业签到信息')" style="margin-left: 8px">导出</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -60,7 +52,7 @@
         :loading="loading"
         @change="handleTableChange"
       >
-        <span slot="boothNumberText" slot-scope="text, record">{{record.signStatus==1?"已签到":"未签到"}}</span>
+        <span slot="boothNumberText" slot-scope="text, record">{{ record.signStatus == 1 ? '已签到' : '未签到' }}</span>
         <span slot="action" slot-scope="text, record">
           <a @click="detail(record)">查看详情</a>
         </span>
@@ -91,7 +83,7 @@ export default {
         jobFairId: '',
         enterpriseInfoName: '',
         signStatus: '',
-        signTime: '',
+        signTime: this.getDate(),
       },
       jobfairdata: [],
       entryenterprise: [],
@@ -128,13 +120,13 @@ export default {
           dataIndex: 'signTime',
           width: 150,
         },
-        {
-          title: '操作',
-          dataIndex: 'action',
-          align: 'center',
-          scopedSlots: { customRender: 'action' },
-          width: 250,
-        },
+        // {
+        //   title: '操作',
+        //   dataIndex: 'action',
+        //   align: 'center',
+        //   scopedSlots: { customRender: 'action' },
+        //   width: 250,
+        // },
       ],
       dict: '',
       signid: '',
@@ -151,6 +143,7 @@ export default {
         list: '/hall/sign/list',
         jobfairdata: '/hall/jobfair/list',
         entryenterprise: '/hall/entryenterprise/list',
+        exportXlsUrl:'/hall/sign/export'
       },
     }
   },
@@ -172,6 +165,14 @@ export default {
     },
     detail(record) {
       this.$refs.enterprisesignindetail.showDrawer(record)
+    },
+    //获取当前时间
+    getDate() {
+      var date = new Date()
+      var year = date.getFullYear() //  返回的是年份
+      var month = date.getMonth() + 1 //  返回的月份上个月的月份，记得+1才是当月
+      var dates = date.getDate() //  返回的是几号
+      return year + '-' + month + '-' + dates
     },
     handleCancel(e) {
       this.visible = false
@@ -215,7 +216,7 @@ export default {
       that.getJobfairList()
       that.queryParam.enterpriseInfoName = ''
       that.queryParam.signStatus = ''
-      that.queryParam.signTime = ''
+      that.queryParam.signTime = this.getDate()
       that.loadData(this.ipagination.current)
     },
   },
@@ -229,4 +230,9 @@ export default {
 </script>
 <style scoped>
 @import '~@assets/less/common.less';
+/deep/ .ant-calendar-picker:hover .ant-calendar-picker-clear {
+    opacity: 1;
+    pointer-events: auto;
+    display: none;
+}
 </style>
