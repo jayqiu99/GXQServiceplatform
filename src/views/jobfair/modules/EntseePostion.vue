@@ -1,14 +1,6 @@
 <template>
-  <a-drawer
-    title="查看岗位"
-    :maskClosable="true"
-    :width="drawerWidth"
-    placement="right"
-    :closable="true"
-    @close="handleCancel"
-    :visible="visible"
-    style="height: 100%; overflow: auto; padding-bottom: 53px"
-  >
+  <a-drawer title="查看岗位" :maskClosable="true" :width="drawerWidth" placement="right" :closable="true"
+    @close="handleCancel" :visible="visible" style="height: 100%; overflow: auto; padding-bottom: 53px">
     <template slot="title">
       <div style="width: 100%">
         <span>{{ title }}</span>
@@ -21,15 +13,9 @@
     <a-spin :spinning="confirmLoading">
       <div style="margin: auto; width: 100%; display: flex; border: 1px solid #e9e9e9; height: 100%">
         <div class="Jobtab" style="width: 53%; flaot: left">
-          <a-table
-            :columns="operationColumns"
-            bordered
-            :customRow="handleClickRow"
-            :dataSource="dataSource"
-            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-            :pagination="ipagination"
-            @change="handleTableChange"
-          >
+          <a-table :columns="operationColumns" bordered :customRow="handleClickRow" :dataSource="dataSource"
+            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" :pagination="ipagination"
+            @change="handleTableChange">
             <span v-if="resstatic != '已过期'" slot="action" slot-scope="text, record">
               <a @click="isAblefalse(record)"> <a-icon type="file-search" />编辑岗位 </a>
               <a-divider type="vertical" />
@@ -63,14 +49,8 @@
                 <span v-if="ispd == 1">{{ boothtext.jobDescription }}</span>
               </detail-list-item>
               <detail-list-item term="岗位类型" style="width: 100%; margin-top: 2%">
-                <a-cascader
-                  style="width: 50%"
-                  v-if="ispd == 0"
-                  v-model="bba"
-                  @change="postonChange"
-                  :options="jobTypeoptions"
-                  placeholder
-                />
+                <a-cascader style="width: 50%" v-if="ispd == 0" v-model="bba" @change="postonChange"
+                  :options="jobTypeoptions" placeholder />
                 <span v-if="ispd == 1">{{ boothtext.jobType }}</span>
               </detail-list-item>
               <detail-list-item term="工作经验" style="width: 100%; margin-top: 2%">
@@ -148,26 +128,20 @@
                 <span v-if="ispd == 1">{{ boothtext.ageRequirement }}</span>
               </detail-list-item>
               <detail-list-item term="工作区域" style="width: 100%; margin-top: 2%">
-                <a-cascader
-                  style="width: 50%"
-                  v-if="ispd == 0"
-                  :options="areaoption"
-                  v-model="areassq"
-                  @change="areaonChange"
-                  placeholder="请选择区域"
-                />
+                <a-cascader style="width: 50%" v-if="ispd == 0" :options="areaoption" v-model="areassq"
+                  @change="areaonChange" placeholder="请选择区域" />
                 <span v-if="ispd == 1">{{ boothtext.areaname }}</span>
               </detail-list-item>
 
               <!--<detail-list-item term="工作详址" style="width: 100%; margin-top: 2%">
-                 <a-textarea
-                  v-if="ispd == 0"
-                  placeholder="请输入工作地址"
-                  v-decorator.trim="['jobAddress', validatorRules.jobAddress]"
-                /> 
-                <a-input style="width: 50%" placeholder v-model="boothtext.jobAddress" v-if="ispd == 0"></a-input>
-                <span v-if="ispd == 1">{{ boothtext.jobAddress }}</span>
-              </detail-list-item>-->
+                         <a-textarea
+                          v-if="ispd == 0"
+                          placeholder="请输入工作地址"
+                          v-decorator.trim="['jobAddress', validatorRules.jobAddress]"
+                        /> 
+                        <a-input style="width: 50%" placeholder v-model="boothtext.jobAddress" v-if="ispd == 0"></a-input>
+                        <span v-if="ispd == 1">{{ boothtext.jobAddress }}</span>
+                      </detail-list-item>-->
               <detail-list-item term="性别要求" style="width: 100%; margin-top: 2%">
                 <a-select style="width: 50%" v-if="ispd == 0" v-model="boothtext.genderRequirement">
                   <a-select-option value>请选择</a-select-option>
@@ -184,17 +158,8 @@
               </detail-list-item>
 
               <detail-list-item term="自定义特色服务" v-if="istrue" style="width: 100%; margin-top: 2%">
-                <el-select
-                  @change="zdytsChange"
-                  style="width: 100%"
-                  v-model="tsfwvalue"
-                  @remove-tag="removetagchange"
-                  multiple
-                  filterable
-                  allow-create
-                  default-first-option
-                  placeholder=""
-                >
+                <el-select @change="zdytsChange" style="width: 100%" v-model="tsfwvalue" @remove-tag="removetagchange"
+                  multiple filterable allow-create default-first-option placeholder="">
                   <el-option v-for="item in tsfwoptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
@@ -208,35 +173,22 @@
                   <a-radio :value="3">限时有效</a-radio>
                 </a-radio-group>
               </detail-list-item>
-              <detail-list-item
-                v-if="boothtext.effectiveState == 3"
-                term="是否长期有效"
-                style="width: 100%; margin-top: 2%"
-              >
-                <a-range-picker
-                  :show-time="{ format: 'HH:mm' }"
-                  v-if="boothtext.effectiveStartdate != null && boothtext.effectiveEnddate != null"
-                  format="YYYY-MM-DD"
-                  style="width: 100%"
-                  :placeholder="['举办开始时间', '举办结束时间']"
-                  :value="[
+              <detail-list-item v-if="boothtext.effectiveState == 3" term="是否长期有效" style="width: 100%; margin-top: 2%">
+                <a-range-picker :show-time="{ format: 'HH:mm' }"
+                  v-if="boothtext.effectiveStartdate != null && boothtext.effectiveEnddate != null" format="YYYY-MM-DD"
+                  style="width: 100%" :placeholder="['举办开始时间', '举办结束时间']" :value="[
                     this.moment(boothtext.effectiveStartdate, dateFormat),
                     this.moment(boothtext.effectiveEnddate, dateFormat),
-                  ]"
-                  @change="dateonChange"
-                />
+                  ]" @change="dateonChange" />
                 <a-range-picker
-                  :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                  show-time
-                  v-if="boothtext.effectiveStartdate == null || boothtext.effectiveEnddate == null"
-                  format="YYYY-MM-DD"
-                  @change="dateonChange"
-                />
+                  :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }" show-time
+                  v-if="boothtext.effectiveStartdate == null || boothtext.effectiveEnddate == null" format="YYYY-MM-DD"
+                  @change="dateonChange" />
                 <!-- <a-range-picker
-                  :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                  format="yyyy-MM-dd HH:mm:ss"
-                  @change="dateonChange"
-                />-->
+                          :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
+                          format="yyyy-MM-dd HH:mm:ss"
+                          @change="dateonChange"
+                        />-->
               </detail-list-item>
             </detail-list>
           </div>
@@ -551,7 +503,7 @@ export default {
           align: 'center',
         },
       ],
-      delelist:[]
+      delelist: []
     }
   },
   created() {
@@ -566,9 +518,9 @@ export default {
       return this.url.fileUpload
     },
   },
-  mounted() {},
+  mounted() { },
   methods: {
-    addEnJob() {},
+    addEnJob() { },
     getNowFormatDate() {
       var date = new Date()
       var seperator1 = '-'
@@ -607,6 +559,14 @@ export default {
         this.$message.warning('无岗位数据')
         return
       }
+      else if (this.delelist.length > 0) {
+        for (var i = 0; i < this.delelist.length; i++) {
+          if (this.delelist[i].examinestate == "审核不通过") {
+            this.$message.warning('存在非保存状态岗位，请编辑岗位后再提交审核')
+            return
+          } 
+        }
+      }
       console.log(this.delelist)
       if (this.delelist.length == 0) {
         this.$message.warning('无法提交，请选中需要提交的岗位')
@@ -624,26 +584,27 @@ export default {
           .then((response) => {
             console.log('企业信息', response.result)
 
-            this.axios({
-              method: 'get',
-              url: '/hall/booth/submitchoosebooth',
-              headers: {},
-              params: { enterpriseinfoid: response.result.enterpriseIds, jobfairid: that.exobj.id },
-            }).then((response2) => {
-              this.SignupformData.createBy = store.getters.userInfo.username
-              this.SignupformData.createTime = this.getNowFormatDate()
-              this.SignupformData.enterpriseInfoId = response.result.enterpriseIds
-              this.SignupformData.jobFairId = that.exobj.id
 
-              console.log('报名信息', this.SignupformData)
-              this.axios({
-                method: 'post',
-                url: '/hall/entryenterprise/entry',
-                headers: {},
-                params: {},
-                data: this.SignupformData,
-              })
-                .then((restt) => {
+            this.SignupformData.createBy = store.getters.userInfo.username
+            this.SignupformData.createTime = this.getNowFormatDate()
+            this.SignupformData.enterpriseInfoId = response.result.enterpriseIds
+            this.SignupformData.jobFairId = that.exobj.id
+
+            console.log('报名信息', this.SignupformData)
+            this.axios({
+              method: 'post',
+              url: '/hall/entryenterprise/entry',
+              headers: {},
+              params: {},
+              data: this.SignupformData,
+            })
+              .then((restt) => {
+                this.axios({
+                  method: 'get',
+                  url: '/hall/booth/submitchoosebooth',
+                  headers: {},
+                  params: { enterpriseinfoid: response.result.enterpriseIds, jobfairid: that.exobj.id },
+                }).then((response2) => {
                   // if (restt.success) {
                   var departn = localStorage.getItem('departId')
                   // console.log('部门信息', departn)
@@ -700,12 +661,12 @@ export default {
                   //   this.$message.warning(restt.message)
                   // }
                 })
-                .catch(function (error) {
-                  // this.$message.error(res.message || '上传失败');
-                  // data.onError() // 返回报错
-                  console.log(error)
-                })
-            })
+                  .catch(function (error) {
+                    // this.$message.error(res.message || '上传失败');
+                    // data.onError() // 返回报错
+                    console.log(error)
+                  })
+              })
           })
           .catch(function (error) {
             // this.$message.error(res.message || '上传失败');
@@ -823,6 +784,14 @@ export default {
       if (this.dataSource.length == 0) {
         this.$message.warning('无岗位数据')
         return
+
+      } else if (this.dataSource.length > 0) {
+        for (var i = 0; i < this.dataSource.length; i++) {
+          if (this.dataSource[i].examinestate == "审核不通过") {
+            this.$message.warning('存在非保存状态岗位，请编辑岗位后再提交审核')
+            return
+          } 
+        }
       }
       if (this.exobj.buttonType == 1) {
         var that = this
@@ -836,29 +805,29 @@ export default {
           .then((response) => {
             console.log('企业信息', response.result)
 
+
+            this.SignupformData.createBy = store.getters.userInfo.username
+            this.SignupformData.createTime = this.getNowFormatDate()
+            this.SignupformData.enterpriseInfoId = response.result.enterpriseIds
+            this.SignupformData.jobFairId = that.exobj.id
+
+            console.log('报名信息', this.SignupformData)
             this.axios({
-              method: 'get',
-              url: '/hall/booth/submitchoosebooth',
+              method: 'post',
+              url: '/hall/entryenterprise/entry',
               headers: {},
-              params: { enterpriseinfoid: response.result.enterpriseIds, jobfairid: that.exobj.id },
-            }).then((response2) => {
-              this.SignupformData.createBy = store.getters.userInfo.username
-              this.SignupformData.createTime = this.getNowFormatDate()
-              this.SignupformData.enterpriseInfoId = response.result.enterpriseIds
-              this.SignupformData.jobFairId = that.exobj.id
-
-              console.log('报名信息', this.SignupformData)
-              this.axios({
-                method: 'post',
-                url: '/hall/entryenterprise/entry',
-                headers: {},
-                params: {},
-                data: this.SignupformData,
-              })
-                .then((restt) => {
-                  // if (restt.success) {
-                  console.log('that.exobj', this.exobj)
-
+              params: {},
+              data: this.SignupformData,
+            })
+              .then((restt) => {
+                // if (restt.success) {
+                console.log('that.exobj', this.exobj)
+                this.axios({
+                  method: 'get',
+                  url: '/hall/booth/submitchoosebooth',
+                  headers: {},
+                  params: { enterpriseinfoid: response.result.enterpriseIds, jobfairid: that.exobj.id },
+                }).then((response2) => {
                   console.log('企业信息', response.result)
                   this.axios({
                     method: 'get',
@@ -892,12 +861,12 @@ export default {
                   //   this.$message.warning(restt.message)
                   // }
                 })
-                .catch(function (error) {
-                  // this.$message.error(res.message || '上传失败');
-                  // data.onError() // 返回报错
-                  console.log(error)
-                })
-            })
+                  .catch(function (error) {
+                    // this.$message.error(res.message || '上传失败');
+                    // data.onError() // 返回报错
+                    console.log(error)
+                  })
+              })
           })
           .catch(function (error) {
             // this.$message.error(res.message || '上传失败');
@@ -2083,7 +2052,7 @@ export default {
 </script>
 
 <style scoped>
-.avatar-uploader > .ant-upload {
+.avatar-uploader>.ant-upload {
   width: 104px;
   height: 104px;
 }
