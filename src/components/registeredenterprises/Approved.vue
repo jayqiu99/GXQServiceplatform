@@ -145,23 +145,29 @@ export default {
           title: '报名企业名称',
           align: 'center',
           dataIndex: 'enterpriseName',
-          width: 300,
+          width: 250,
         },
         {
           title: '负责人名称',
           align: 'center',
           dataIndex: 'companyPrincipal',
-          width: 180,
+          width: 130,
         },
         {
           title: '联系电话',
           align: 'center',
           dataIndex: 'phone',
-          width: 180,
+          width: 130,
         }, {
           title: '报名时间',
           align: 'center',
           dataIndex: 'entryTime',
+          width: 150,
+        },
+         {
+          title: '审核时间',
+          align: 'center',
+          dataIndex: 'updateTime',
           width: 150,
         },
         {

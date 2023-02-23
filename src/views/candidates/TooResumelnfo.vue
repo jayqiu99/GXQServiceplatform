@@ -158,7 +158,7 @@
                                     </tr>
                                     <tr>
                                       <td valign="top" class="keys">期望职业：</td>
-                                      <td valign="top" class="txt2">{{ formData.intendedPosition }}</td>
+                                      <td valign="top" class="txt2">{{ formData.intendedPosition2 }}</td>
                                     </tr>
                                     <tr>
                                       <td valign="top" class="keys">期望行业：</td>

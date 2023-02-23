@@ -134,14 +134,14 @@
               </detail-list-item>
 
               <!--<detail-list-item term="工作详址" style="width: 100%; margin-top: 2%">
-                         <a-textarea
-                          v-if="ispd == 0"
-                          placeholder="请输入工作地址"
-                          v-decorator.trim="['jobAddress', validatorRules.jobAddress]"
-                        /> 
-                        <a-input style="width: 50%" placeholder v-model="boothtext.jobAddress" v-if="ispd == 0"></a-input>
-                        <span v-if="ispd == 1">{{ boothtext.jobAddress }}</span>
-                      </detail-list-item>-->
+                           <a-textarea
+                            v-if="ispd == 0"
+                            placeholder="请输入工作地址"
+                            v-decorator.trim="['jobAddress', validatorRules.jobAddress]"
+                          /> 
+                          <a-input style="width: 50%" placeholder v-model="boothtext.jobAddress" v-if="ispd == 0"></a-input>
+                          <span v-if="ispd == 1">{{ boothtext.jobAddress }}</span>
+                        </detail-list-item>-->
               <detail-list-item term="性别要求" style="width: 100%; margin-top: 2%">
                 <a-select style="width: 50%" v-if="ispd == 0" v-model="boothtext.genderRequirement">
                   <a-select-option value>请选择</a-select-option>
@@ -185,10 +185,10 @@
                   v-if="boothtext.effectiveStartdate == null || boothtext.effectiveEnddate == null" format="YYYY-MM-DD"
                   @change="dateonChange" />
                 <!-- <a-range-picker
-                          :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                          format="yyyy-MM-dd HH:mm:ss"
-                          @change="dateonChange"
-                        />-->
+                            :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
+                            format="yyyy-MM-dd HH:mm:ss"
+                            @change="dateonChange"
+                          />-->
               </detail-list-item>
             </detail-list>
           </div>
@@ -561,10 +561,12 @@ export default {
       }
       else if (this.delelist.length > 0) {
         for (var i = 0; i < this.delelist.length; i++) {
-          if (this.delelist[i].examinestate == "审核不通过") {
-            this.$message.warning('存在非保存状态岗位，请编辑岗位后再提交审核')
+          if (this.delelist[i].examinestate == "保存") {
+           break
+          }else if(i==this.delelist.length-1){
+            this.$message.warning('请编辑岗位并保存后提交审核')
             return
-          } 
+          }
         }
       }
       console.log(this.delelist)
@@ -787,10 +789,12 @@ export default {
 
       } else if (this.dataSource.length > 0) {
         for (var i = 0; i < this.dataSource.length; i++) {
-          if (this.dataSource[i].examinestate == "审核不通过") {
-            this.$message.warning('存在非保存状态岗位，请编辑岗位后再提交审核')
+          if (this.dataSource[i].examinestate == "保存") {
+            break;
+          }else if(i==this.dataSource.length-1){
+            this.$message.warning('请编辑岗位并保存后提交审核')
             return
-          } 
+          }
         }
       }
       if (this.exobj.buttonType == 1) {

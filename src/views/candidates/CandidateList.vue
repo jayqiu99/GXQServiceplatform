@@ -29,7 +29,7 @@
           </a-col>
           <a-col :md="7" :sm="8" :push="3">
             <a-form-item label="意向岗位" :labelCol="{ span: 6 }" :wrapperCol="{ span: 14, offset: 1 }">
-              <a-input placeholder v-model="queryParam.idcard"></a-input>
+              <a-input placeholder v-model="queryParam.intendedPosition"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="7" :sm="8" :push="3">
@@ -40,6 +40,9 @@
           </a-col>
         </a-row>
       </a-form>
+      <div class="table-operator" style="border-top: 5px">
+        <a-button @click="handleExportXls('求职者信息')" type="primary" icon="download">导出</a-button>
+      </div>
       <a-table
         bordered
         ref="table"
@@ -87,7 +90,7 @@ export default {
       isphototrue:true,
       queryParam: {
         name: '',
-        idcard: '',
+        intendedPosition: '',
         gender: '',
         education: '',
         workArea:''
@@ -135,7 +138,7 @@ export default {
         {
           title: '意向岗位',
           align: 'center',
-          dataIndex: 'intendedPosition',
+          dataIndex: 'intendedPosition2',
           width: 200,
         },
         {
@@ -173,6 +176,7 @@ export default {
         list: '/hall/curriculumvitae/list',
         arealist: '/base/getcityjsoninfo',
         enable: '/hall/curriculumvitae/enable',
+        exportXlsUrl:'/app/interview/exportXlsCurriculumVitae'
       },
     }
   },
@@ -348,7 +352,7 @@ export default {
     searchReset() {
       var that = this
       that.queryParam.name = ''
-      that.queryParam.idcard = ''
+      that.queryParam.intendedPosition = ''
       that.queryParam.gender = ''
       that.queryParam.education = ''
       that.loadData(this.ipagination.current)

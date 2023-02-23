@@ -5,14 +5,19 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="12">
           <a-col :md="7" :sm="8">
-            <a-form-item label="公告标题" :labelCol="{ span: 7 }" :wrapperCol="{ span: 16, offset: 1 }">
-              <a-input placeholder="请输入公告标题" v-model="queryParam.noticeTitle"></a-input>
+            <a-form-item label="标题" :labelCol="{ span: 7 }" :wrapperCol="{ span: 16, offset: 1 }">
+              <a-input placeholder="请输入标题" v-model="queryParam.noticeTitle"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="7" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+              <a-button
+                type="primary"
+                @click="searchReset"
+                icon="reload"
+                style="margin-left: 8px"
+              >重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -42,8 +47,7 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">
-            <a-icon type="edit" />
-            编辑修改
+            <a-icon type="edit" />编辑修改
           </a>
           <a-divider type="vertical" />
           <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -54,7 +58,7 @@
     </div>
 
     <!-- 字典类型 -->
-    <public-notice-modal ref="modalForm" @ok="modalFormOk"></public-notice-modal>
+    <public-modal ref="modalForm" :noticetype="queryParam.noticetype" :title="title" @ok="modalFormOk"></public-modal>
     <!-- 字典类型 -->
     <dict-item-list ref="dictItemList"></dict-item-list>
     <dict-delete-list ref="dictDeleteList" @refresh="() => loadData()"></dict-delete-list>
@@ -69,15 +73,15 @@ const columns = [
     key: 'rowIndex',
     width: 120,
     align: 'center',
-    customRender: function (t, r, index) {
+    customRender: function(t, r, index) {
       return parseInt(index) + 1
-    },
+    }
   },
   {
-    title: '公告标题',
+    title: '标题',
     align: 'center',
     width: 470,
-    dataIndex: 'noticeTitle',
+    dataIndex: 'noticeTitle'
   },
   //    {
   //     title: '公告内容',
@@ -90,31 +94,31 @@ const columns = [
     align: 'center',
     width: 100,
     dataIndex: 'enable',
-    scopedSlots: { customRender: 'enablescope' },
+    scopedSlots: { customRender: 'enablescope' }
   },
   {
     title: '创建时间',
     align: 'center',
     width: 150,
-    dataIndex: 'createTime',
+    dataIndex: 'createTime'
   },
   {
     title: '更新时间',
     align: 'center',
     width: 150,
-    dataIndex: 'updateTime',
+    dataIndex: 'updateTime'
   },
   {
     title: '操作',
     dataIndex: 'action',
     width: 120,
     align: 'center',
-    scopedSlots: { customRender: 'action' },
-  },
+    scopedSlots: { customRender: 'action' }
+  }
 ]
 import { filterObj } from '@/utils/util'
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-import publicNoticeModal from './modules/publicNoticeModal'
+import publicModal from './modules/publicModal'
 import DictItemList from '../system/DictItemList'
 import DictDeleteList from '../system/DictDeleteList'
 import { getAction, deleteAction, postAction } from '@/api/manage'
@@ -122,34 +126,35 @@ import { UI_CACHE_DB_DICT_DATA } from '@/store/mutation-types'
 import Vue from 'vue'
 
 export default {
-  name: 'DictList',
+  name: 'policyDocument',
   mixins: [JeecgListMixin],
-  components: { publicNoticeModal, DictItemList, DictDeleteList },
+  components: { publicModal, DictItemList, DictDeleteList },
   data() {
     return {
       visible: false,
       // 查询条件
       queryParam: {
-        name: '',
-        noticetype:'notice'
+        noticeTitle: '',
+        noticetype: 'file'
       },
       columns,
       dataSource: [],
       dict: '',
       labelCol: {
         xs: { span: 8 },
-        sm: { span: 5 },
+        sm: { span: 5 }
       },
       wrapperCol: {
         xs: { span: 16 },
-        sm: { span: 19 },
+        sm: { span: 19 }
       },
       url: {
         list: '/app/publicnotice/list',
         delete: '/app/publicnotice/delete',
-        enable: '/app/publicnotice/enable',
-        edit: '/app/publicnotice/editById',
+        enable: '/app/publicnotice/zcenable',
+        edit: '/app/publicnotice/editById'
       },
+      title:'修改编辑政策文件'
     }
   },
   computed: {},
@@ -162,7 +167,7 @@ export default {
         this.ipagination.current = 1
       }
       let params = this.getQueryParams() //查询条件
-      getAction(this.url.list, params).then((res) => {
+      getAction(this.url.list, params).then(res => {
         if (res.success) {
           this.dataSource = res.result.records
           this.ipagination.total = res.result.total
@@ -172,7 +177,7 @@ export default {
     handleDelete(deleId) {
       console.log('删除')
       let that = this
-      deleteAction(that.url.delete, { id: deleId }).then((res) => {
+      deleteAction(that.url.delete, { id: deleId }).then(res => {
         if (res.success) {
           this.loadData(1)
           that.$message.success(res.message)
@@ -182,14 +187,14 @@ export default {
         }
       })
     },
-    enableChange(e,record) {
+    enableChange(e, record) {
       var _this = this
-      if(e){
-        record.enable=1
-      }else{
-        record.enable=0
+      if (e) {
+        record.enable = 1
+      } else {
+        record.enable = 0
       }
-      getAction(this.url.enable, { id: record.id, enable: record.enable  }).then((res) => {
+      getAction(this.url.enable, { id: record.id, enable: record.enable }).then(res => {
         if (res.success) {
           _this.$message.success(res.message)
           this.loadData(1)
@@ -224,14 +229,14 @@ export default {
     // 重置字典类型搜索框的内容
     searchReset() {
       var that = this
-      that.queryParam.name = ''
-      that.queryParam.noticetype='notice'
+      that.queryParam.noticeTitle = ''
+      that.queryParam.noticetype = 'file'
       that.loadData(this.ipagination.current)
     },
     openDeleteList() {
       this.$refs.dictDeleteList.show()
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped>

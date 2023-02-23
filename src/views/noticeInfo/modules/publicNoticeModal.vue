@@ -103,6 +103,7 @@ export default {
           that.confirmLoading = true
           values.noticeContent = (values.noticeContent.html || '').trim()
           values.noticeTitle = (values.noticeTitle || '').trim()
+          values.noticeType='notice'
           values.createBy=(store.getters.userInfo.id || '').trim()
           values.updateBy = (store.getters.userInfo.id || '').trim()
           let formData = Object.assign(this.model, values)

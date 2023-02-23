@@ -1,8 +1,8 @@
 <template>
-  <a-modal :title="title" :width="600" :visible="visible" @cancel="handleCancel" style="overflow: auto;">
+  <a-modal  :title="title" :width="600" :visible="visible" @cancel="handleCancel" style="overflow: auto;">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-       <div v-html="noticeContent" class="ql-editor" ></div>
+       <div  v-html="noticeContent" class="ql-editor" ></div>
       </a-form>
     </a-spin>
 
@@ -54,7 +54,11 @@ export default {
         if(res.success){
           if(res.result!=null){
           _this.visible=true
-          _this.noticeContent=res.result.noticeContent
+          if(res.result.noticeContent.indexOf('<img')!=-1){
+          _this.noticeContent= res.result.noticeContent.replace(/<img/g,'<img style="max-width:100%;height:auto;display:block;margin:10px 0;"')
+          }else{
+           _this.noticeContent=res.result.noticeContent
+          }
           }}
       })
     },
@@ -65,3 +69,26 @@ export default {
   },
 }
 </script>
+<style  scoped>
+/deep/.ant-modal-body {
+  max-height: calc(80vh - 150px);
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+ 
+  &::-webkit-scrollbar-thumb {
+
+    background: #e3e3e6;
+    border-radius: 6px;
+  }
+ 
+  &::-webkit-scrollbar-track {
+    background: transparent;
+
+    border-radius: 5px;
+  }
+}
+</style>

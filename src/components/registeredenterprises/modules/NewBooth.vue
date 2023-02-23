@@ -507,7 +507,7 @@ export default {
       console.log('已占展位111', this.recordData)
       this.getboothquery.pageNo = this.queryParams.pageNum
       this.getboothquery.pageSize = this.queryParams.pageSize
-      this.getboothquery.jobfairid = this.recordData.jobfairid
+      this.getboothquery.jobFairId = this.recordData.jobfairid
       getqueryBoothInfoListbyenable(this.getboothquery).then((res) => {
         if (res.success) {
           console.log('条数', res.result.total)

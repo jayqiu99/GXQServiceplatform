@@ -538,6 +538,12 @@ export default {
           scopedSlots: { customRender: 'examine' },
         },
         {
+          title: '审核时间',
+          align: 'center',
+          width: 100,
+          dataIndex: 'updateTime',
+        },
+        {
           title: '通知',
           align: 'center',
           width: 300,
