@@ -79,7 +79,7 @@ module.exports = {
       },*/
       '/zqhr': {
         target: 'https://dwrlzy.jiahangit.com.cn', //请求本地 需要jeecg-boot后台项目
-        // target:'https://dwrlzy.jiahangit.com.cn',//正式环境
+        // target:'https://zqgxjob.gxzhdw.cn:1020',//正式环境
         ws: false,
         changeOrigin: true
       },
