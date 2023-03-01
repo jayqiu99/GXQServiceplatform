@@ -2,18 +2,13 @@
   <a-card :bordered="false">
     <a-tabs defaultActiveKey="2" @change="callback">
       <a-tab-pane tab="审核通过" key="1">
-        <child ref="approvedlist"></child>
+        <child ref="approvedlist" :key="childKey" :enterprisetype="enterprisetype"></child>
       </a-tab-pane>
       <a-tab-pane tab="待审核" key="2">
-        <!-- <span slot="tab">
-          <el-badge :value="tablab" :max="99" class="item">
-            <div class="dshdiv">待审核</div>
-          </el-badge>
-        </span> -->
-        <reviewed ref="toBeReviewedlist"></reviewed>
+        <reviewed ref="toBeReviewedlist" :key="reviewedKey" :enterprisetype="enterprisetype"></reviewed>
       </a-tab-pane>
       <a-tab-pane tab="审核不通过" key="3">
-        <audit ref="auditFailurelist"></audit>
+        <audit ref="auditFailurelist" :key="auditKey" :enterprisetype="enterprisetype"></audit>
       </a-tab-pane>
     </a-tabs>
   </a-card>
@@ -25,7 +20,7 @@ import audit from '../../components/Enterpriseinfosh/AuditFailure'
 import reviewed from '../../components/Enterpriseinfosh/ToBeReviewed'
 import Vue from 'vue'
 export default {
-  name: 'ArchivesStatisticst',
+  name: 'tryindex',
   components: {
     child,
     audit,
@@ -33,7 +28,11 @@ export default {
   },
   data() {
     return {
-      tablab: 0
+      tablab: 0,
+      childKey:false,
+      reviewedKey:false,
+      auditKey:false,
+      enterprisetype:'qy'
     }
   },
   created() {
@@ -62,10 +61,13 @@ export default {
     //
     callback(key) {
       if (key === '1') {
+        this.childKey=!this.childKey
         this.$refs.approvedlist.switched()
       } else if (key === '2') {
+         this.reviewedKey=!this.reviewedKey
         this.$refs.toBeReviewedlist.switched()
       } else if (key === '3') {
+         this.auditKey=!this.auditKey
         this.$refs.auditFailurelist.switched()
       }
     },

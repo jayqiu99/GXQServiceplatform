@@ -32,7 +32,7 @@ export default {
       childKey: false,
       reviewedKey: false,
       auditKey: false,
-      enterprisetype: 'qy'
+      enterprisetype: 'rlzy'
     }
   },
   created() {

@@ -183,6 +183,14 @@
     name: 'DictList',
     mixins: [JeecgListMixin],
     components: { UserModal, ExamineItemList, JInput, Addent },
+    props:{
+       enterprisetype: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    },
+    },
     data() {
       return {
         listforlebel: [], //企业下拉
@@ -391,6 +399,7 @@
         this.$refs.examineForm.edit(resobj)
       },
       switched() {
+        console.log('类型', this.enterprisetype)
         this.loadData()
       },
       cascaderonChange(value) {
@@ -421,6 +430,7 @@
         console.log('查询条件', this.areaname)
         console.log(params)
         params.area = this.areaname
+        params.enterprisetype=this.enterprisetype
         var logoAddressUrl = 'https://dwrlzy.jiahangit.com.cn/zqhr'
         approvedList(params).then((res) => {
           console.log("res", res);
@@ -581,6 +591,7 @@
         that.queryParam.name = ''
         that.queryParam.scale = ''
         that.cascaderit = ''
+        that.queryParam.enterprisetype=this.enterprisetype
         that.loadData(this.ipagination.current)
       },
       exportFile() {
@@ -589,13 +600,14 @@
         var area = that.queryParam.area
         var name = that.queryParam.name
         var scale = that.queryParam.scale
+        var enterprisetype=that.enterprisetype
         console.log('trade', trade)
         console.log('area', area)
         console.log('name', name)
         console.log('scale', scale)
 
         this.$http({
-          url: '/hall/enterprise/export?area=' + area + '&trade=' + trade + '&name=' + name + '&scale=' + scale,
+          url: '/hall/enterprise/export?area=' + area + '&trade=' + trade + '&name=' + name + '&scale=' + scale+ '&enterprisetype=' + enterprisetype,
           method: 'get',
           responseType: 'arraybuffer', // 表明返回服务器返回的数据类型
           headers: {

@@ -9,12 +9,12 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <div v-html="noticeObj.noticeContent" class="ql-editor"></div>
-        <div>
+        <div v-if="noticeObj.address!=null">
           <span
             style="font-weight:bolder;color:black;margin:20px;font-size:18px"
           >地址:{{noticeObj.address}}</span>
         </div>
-        <div v-if="noticeObj.longitude != null && noticeObj.latitude != null">
+        <!-- <div v-if="noticeObj.longitude != null && noticeObj.latitude != null">
           <el-amap
             class="amap-box"
             :zoom="amap.zoom"
@@ -22,13 +22,13 @@
             :plugin="amap.plugin"
             :events="amap.events"
           >
-            <!-- 当前位置图标 -->
+           
             <el-amap-marker
               v-for="(marker, index) in amap.markers"
               :key="'marker' + index"
               :position="marker.position"
             />
-            <!-- 位置名称显示 -->
+          
             <el-amap-text
               v-for="(marker, index) in amap.markers"
               :key="'text' + index"
@@ -37,7 +37,7 @@
               :position="marker.position"
             />
           </el-amap>
-        </div>
+        </div> -->
       </a-form>
     </a-spin>
 

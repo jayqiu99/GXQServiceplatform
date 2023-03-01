@@ -141,6 +141,14 @@ import Vue from 'vue'
 export default {
   name: 'DictList',
   mixins: [JeecgListMixin],
+  props: {
+    enterprisetype: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    }
+  },
   components: { ExamineItemList, AddModal, JInput, InvitationJob },
   data() {
     return {
@@ -155,7 +163,8 @@ export default {
         jobfairId: '',
         enterpriseName: '',
         examinestate: '',
-        phone: ''
+        phone: '',
+        enterprisetype: this.enterprisetype
       },
       examinestate: '1',
       jobfairdata: [],
@@ -474,6 +483,7 @@ export default {
       that.getJobfairList()
       that.queryParam.enterpriseName = ''
       that.queryParam.examinestate = ''
+      that.queryParam.enterprisetype = that.enterprisetype
       that.queryParam.phone = ''
       that.loadData(this.ipagination.current)
     }

@@ -39,7 +39,7 @@
                   <a-input placeholder="请输入岗位名称" v-model="queryParam.postName"></a-input>
                 </a-form-item>
               </a-col>
-               <a-col :md="9" :sm="8">
+              <a-col :md="9" :sm="8">
                 <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                   <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
                   <a-button
@@ -76,13 +76,15 @@
               </a-col>
 
              
-            </a-row> -->
+            </a-row>-->
           </a-form>
         </div>
         <!-- 操作按钮区域 -->
         <div class="table-operator" style="border-top: 5px">
           <a-button @click="handleAdd" type="primary" icon="plus">添加岗位</a-button>
-          <a-button @click="batchExamine" type="primary"><a-icon type="check" /> 批量审核通过</a-button>
+          <a-button @click="batchExamine" type="primary">
+            <a-icon type="check" />批量审核通过
+          </a-button>
           <!-- <a-upload
             name="file"
             style="margin-left: 1px;display:inline-block"
@@ -94,7 +96,7 @@
             <a-button type="primary">
               <a-icon type="upload" />导入Excel
             </a-button>
-          </a-upload> -->
+          </a-upload>-->
           <a-button
             type="primary"
             style="margin-left: 8px ;display:inline-block"
@@ -110,7 +112,7 @@
               </a-menu-item>
               <a-menu-item key="3">
                 <a-icon type="delete" @click="batchDel" />批次审核
-              </a-menu-item> -->
+              </a-menu-item>-->
             </a-menu>
             <a-button style="margin-left: 8px">
               批量操作
@@ -219,6 +221,14 @@ import Vue from 'vue'
 export default {
   name: 'DictList',
   mixins: [JeecgListMixin],
+  props: {
+    enterprisetype: {
+      type: String,
+      default: () => {
+        return ''
+      }
+    }
+  },
   components: { UserModal, ExamineItemList, JInput },
   data() {
     return {
@@ -232,9 +242,10 @@ export default {
         batch: '',
         postName: '',
         iserror: '',
-        enterpriseid: ''
+        enterpriseid: '',
+        enterprisetype: this.enterprisetype
       },
-      temloading:false,
+      temloading: false,
       newlogoAddress: '',
       industryoption: [], //行业
       scaleoption: [], //规模
@@ -342,49 +353,49 @@ export default {
   methods: {
     batchExamine() {
       console.log('批量审核id', this.delelist)
-      if(this.delelist==undefined){
-        this.$message.warning("请勾选后再点击提交审核！")
-      }else{
-      var idsjobids = ''
-      for (var i = 0; i < this.delelist.length; i++) {
-        if (i == this.delelist.length - 1) {
-          idsjobids += this.delelist[i].id
-        } else {
-          idsjobids += this.delelist[i].id + ','
-        }
-      }
-      console.log(idsjobids, '参数')
-      this.axios({
-        method: 'get',
-        url: '/hall/position/plexamineallPostReleaseTemporary',
-        headers: {},
-        params: {
-          jobids: idsjobids,
-          UpdateBy:store.getters.userInfo.username,
-        },
-      })
-        .then((response) => {
-          if (response.code == 200) {
-            this.$message.success(response.message)
-            this.loadData()
-            that.$emit('ok')
+      if (this.delelist == undefined) {
+        this.$message.warning('请勾选后再点击提交审核！')
+      } else {
+        var idsjobids = ''
+        for (var i = 0; i < this.delelist.length; i++) {
+          if (i == this.delelist.length - 1) {
+            idsjobids += this.delelist[i].id
           } else {
-            this.$message.warning(response.message)
-            this.loadData()
-            that.$emit('ok')
+            idsjobids += this.delelist[i].id + ','
+          }
+        }
+        console.log(idsjobids, '参数')
+        this.axios({
+          method: 'get',
+          url: '/hall/position/plexamineallPostReleaseTemporary',
+          headers: {},
+          params: {
+            jobids: idsjobids,
+            UpdateBy: store.getters.userInfo.username
           }
         })
-        .finally(() => {
-          that.confirmLoading = false
-          that.checkedDepartNames = []
-          that.userDepartModel.departIdList = { userId: '', departIdList: [] }
-          that.close()
-        })
-        .catch(function (error) {
-          this.$message.warning(response.message)
+          .then(response => {
+            if (response.code == 200) {
+              this.$message.success(response.message)
+              this.loadData()
+              that.$emit('ok')
+            } else {
+              this.$message.warning(response.message)
+              this.loadData()
+              that.$emit('ok')
+            }
+          })
+          .finally(() => {
+            that.confirmLoading = false
+            that.checkedDepartNames = []
+            that.userDepartModel.departIdList = { userId: '', departIdList: [] }
+            that.close()
+          })
+          .catch(function(error) {
+            this.$message.warning(response.message)
 
-          console.log(error)
-        })
+            console.log(error)
+          })
       }
     },
     exportFile() {
@@ -393,6 +404,7 @@ export default {
       var tpostName = that.queryParam.postName
       var tbatch = that.queryParam.batch
       var tiserror = that.queryParam.iserror
+      var enterprisetype = that.enterprisetype
       console.log('tenterpriseid', tenterpriseid)
       console.log('tpostName', tpostName)
       console.log('tbatch', tbatch)
@@ -407,7 +419,9 @@ export default {
           '&iserror=' +
           tiserror +
           '&postName=' +
-          tpostName,
+          tpostName +
+          '&enterprisetype=' +
+          enterprisetype,
         method: 'get',
         responseType: 'arraybuffer', // 表明返回服务器返回的数据类型
         headers: {
@@ -456,11 +470,11 @@ export default {
         this.$message.error(`${info.file.name} 上传失败.`)
         this.$refs.upload.clearFiles()
       }
-      this.temloading=false;
+      this.temloading = false
     },
     // 上传提交
     customRequest(data) {
-      this.temloading=true;
+      this.temloading = true
       const formData = new FormData()
       formData.append('file', data.file)
       formData.append('token', 'token')
@@ -529,12 +543,11 @@ export default {
             console.log(error)
           })
       }
-    }, 
+    },
     examineFormclick(resobj) {
-      
-      if (resobj.iserror == 0 || resobj.errorReason =="该企业岗位已存在") {
+      if (resobj.iserror == 0 || resobj.errorReason == '该企业岗位已存在') {
         this.$refs.examineForm.edit(resobj)
-      } else if (resobj.iserror == 1 && resobj.errorReason !="该企业岗位已存在") {
+      } else if (resobj.iserror == 1 && resobj.errorReason != '该企业岗位已存在') {
         this.$notification['warning']({
           message: '不能审核',
           description: resobj.errorReason
@@ -732,6 +745,7 @@ export default {
       that.queryParam.name = ''
       that.queryParam.scale = ''
       that.cascaderit = ''
+      that.queryParam.enterprisetype = this.enterprisetype
       that.loadData(this.ipagination.current)
     },
     openDeleteList() {
